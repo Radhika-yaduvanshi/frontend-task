@@ -1,0 +1,11 @@
+/* Custom Hover Effect for buttons */
+.btn:hover {
+    transform: scale(1.05);  /* Slightly enlarge the button */
+    transition: all 0.3s ease;
+}
+
+/* Profile image hover effect */
+.btn:hover img {
+    transform: rotate(15deg);  /* Slight rotation effect */
+    transition: all 0.3s ease;
+}

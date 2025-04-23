@@ -1,0 +1,214 @@
+ /* Global Styles */
+ body {
+    background-color: #f4f7fc;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Flexbox for centering the form */
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Hover effect on card */
+  .login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Heading style */
+  .login-header {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  /* Input field styles */
+  .form-control {
+    height: 45px;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  /* Error messages */
+  .text-danger {
+    font-size: 12px;
+    color: #f44336;
+  }
+
+  /* Animation for fading in the form */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .login-card {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 576px) {
+    .login-card {
+      padding: 20px;
+    }
+    .login-header {
+      font-size: 22px;
+    }
+  }
+
+        /* Global Styles */
+        body {
+          background: linear-gradient(135deg, #1a73e8, #003e8a);
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+        }
+  
+        /* Flexbox for centering the form */
+        .login-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          padding: 20px;
+        }
+  
+        .login-card {
+          width: 100%;
+          max-width: 400px;
+          padding: 40px;
+          background-color: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+          transition: all 0.3s ease-in-out;
+          animation: fadeInUp 0.8s ease-out;
+        }
+  
+        /* Hover effect on card */
+        .login-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.15);
+        }
+  
+        /* Heading style */
+        .login-header {
+          font-size: 28px;
+          font-weight: bold;
+          margin-bottom: 30px;
+          text-align: center;
+          color: #333;
+          text-transform: uppercase;
+        }
+  
+        /* Input field styles */
+        .form-control {
+          height: 45px;
+          font-size: 14px;
+          border-radius: 8px;
+          padding: 12px;
+          border: 1px solid #ddd;
+          transition: border-color 0.3s ease;
+        }
+  
+        .form-control:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+  
+        /* Button Styles */
+        .btn-primary {
+          background-color: #007bff;
+          border: none;
+          padding: 14px;
+          font-size: 16px;
+          border-radius: 8px;
+          width: 100%;
+          text-transform: uppercase;
+          font-weight: bold;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+  
+        .btn-primary:hover {
+          background-color: #0056b3;
+          transform: translateY(-3px);
+        }
+  
+        /* Error messages */
+        .text-danger {
+          font-size: 12px;
+          color: #f44336;
+        }
+  
+        /* Animation for fading in the form */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+  
+        .login-card {
+          animation: fadeInUp 0.8s ease-out;
+        }
+  
+        /* Mobile responsiveness */
+        @media (max-width: 576px) {
+          .login-card {
+            padding: 25px;
+          }
+          .login-header {
+            font-size: 24px;
+          }
+        }

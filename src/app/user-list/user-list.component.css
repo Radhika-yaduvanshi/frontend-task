@@ -1,0 +1,54 @@
+/* Custom Styles */
+.user-table-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .table-heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table-wrapper {
+    margin-top: 20px;
+  }
+  
+  .custom-table td, .custom-table th {
+    vertical-align: middle;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ddd;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .pagination-container {
+    padding: 10px;
+  }
+  
+  /* Ensure pagination controls are aligned well */
+  pagination-controls {
+    display: inline-block;
+    margin-top: 10px;
+  }
+  

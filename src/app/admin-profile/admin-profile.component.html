@@ -1,0 +1,59 @@
+<div class="profile-container container mt-5">
+    <!-- Profile Header with Image on Top -->
+    <div class="profile-header text-center mb-4">
+      <!-- Profile Image -->
+      <div class="profile-image-container mb-3">
+        <!-- <img 
+          *ngIf="author?.profileImage"
+          [src]="getProfileImageUrl(author.profileImage)" 
+          alt="Profile Image" 
+          class="profile-image img-fluid rounded-circle border shadow"
+        /> -->
+        <img *ngIf="author?.profileImage" [src]="getProfileImageUrl(author.profileImage)" alt="Profile Image" class="profile-image" />
+
+      </div>
+      <!-- Profile Info -->
+      <h2 class="profile-name">{{ author?.userName }}</h2>
+      <p class="profile-role text-muted">{{ author?.accessRole }}</p>
+    </div>
+  
+    <!-- Profile Table -->
+    <div class="profile-details-table">
+      <table class="table table-bordered table-light">
+        <tbody>
+          <tr>
+            <th>Username</th>
+            <td>{{ author?.userName }}</td>
+          </tr>
+          <!-- <tr>
+            <th>Email</th>
+            <td>{{ author?.email }}</td>
+          </tr> -->
+          <!-- <tr>
+            <th>Phone</th>
+            <td>{{ author?.phone }}</td>
+          </tr> -->
+          <tr>
+            <th>Access Role</th>
+            <td>{{ author?.accessRole }}</td>
+          </tr>
+          <tr>
+            <th>Date of Birth</th>
+            <td>{{ author?.dob | date: 'mediumDate' }}</td>
+          </tr>
+          <tr>
+            <th>Address</th>
+            <td>{{ author?.address }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Edit Profile Button -->
+    <div class="edit-profile-btn-container text-center mt-4">
+      <a [routerLink]="['/admin/edit-profile', authorId]" class="btn btn-primary btn-lg">
+        <i class="fas fa-user-edit"></i> Edit Profile
+      </a>
+    </div>
+  </div>
+  
