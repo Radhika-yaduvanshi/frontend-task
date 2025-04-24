@@ -1,0 +1,36 @@
+.user-details-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .user-detail {
+    margin-bottom: 15px;
+  }
+  
+  .user-detail strong {
+    font-weight: bold;
+  }
+  
+  .user-detail p {
+    margin: 5px 0;
+    color: #333;
+  }
+  
+  .loading-message {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+  }
+  

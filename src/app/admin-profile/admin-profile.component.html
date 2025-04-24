@@ -1,59 +1,80 @@
-<div class="profile-container container mt-5">
-    <!-- Profile Header with Image on Top -->
-    <div class="profile-header text-center mb-4">
-      <!-- Profile Image -->
-      <div class="profile-image-container mb-3">
-        <!-- <img 
-          *ngIf="author?.profileImage"
-          [src]="getProfileImageUrl(author.profileImage)" 
-          alt="Profile Image" 
-          class="profile-image img-fluid rounded-circle border shadow"
-        /> -->
-        <img *ngIf="author?.profileImage" [src]="getProfileImageUrl(author.profileImage)" alt="Profile Image" class="profile-image" />
-
+<div
+  class="page-content page-container min-vh-100 d-flex align-items-center justify-content-center bg-light"
+>
+  <div
+    class="card user-card-full shadow-lg rounded-4"
+    style="width: 950px; height: 550px"
+  >
+    <div class="row m-0 h-100">
+      <!-- Left Profile Panel -->
+      <div
+        class="col-sm-4 bg-c-lite-green user-profile text-white rounded-start d-flex flex-column align-items-center justify-content-center"
+      >
+        <div class="text-center">
+          <div class="mb-3">
+            <img
+              src="female-profile1.png"
+              alt="Profile"
+              width="110"
+              class="img-radius shadow"
+            />
+          </div>
+          <h6 class="fw-bold fs-5">{{ author?.userName }}</h6>
+          <p class="fs-6">{{ author?.accessRole }}</p>
+          <i
+            class="mdi mdi-square-edit-outline feather icon-edit mt-2 fs-5"
+          ></i>
+        </div>
       </div>
-      <!-- Profile Info -->
-      <h2 class="profile-name">{{ author?.userName }}</h2>
-      <p class="profile-role text-muted">{{ author?.accessRole }}</p>
-    </div>
-  
-    <!-- Profile Table -->
-    <div class="profile-details-table">
-      <table class="table table-bordered table-light">
-        <tbody>
-          <tr>
-            <th>Username</th>
-            <td>{{ author?.userName }}</td>
-          </tr>
-          <!-- <tr>
-            <th>Email</th>
-            <td>{{ author?.email }}</td>
-          </tr> -->
-          <!-- <tr>
-            <th>Phone</th>
-            <td>{{ author?.phone }}</td>
-          </tr> -->
-          <tr>
-            <th>Access Role</th>
-            <td>{{ author?.accessRole }}</td>
-          </tr>
-          <tr>
-            <th>Date of Birth</th>
-            <td>{{ author?.dob | date: 'mediumDate' }}</td>
-          </tr>
-          <tr>
-            <th>Address</th>
-            <td>{{ author?.address }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <!-- Edit Profile Button -->
-    <div class="edit-profile-btn-container text-center mt-4">
-      <a [routerLink]="['/admin/edit-profile', authorId]" class="btn btn-primary btn-lg">
-        <i class="fas fa-user-edit"></i> Edit Profile
-      </a>
+
+      <!-- Right Info Panel -->
+      <div
+        class="col-sm-8 bg-white rounded-end d-flex flex-column justify-content-between"
+      >
+        <div class="card-block p-4">
+          <h6 class="mb-3 pb-2 border-bottom fw-bold fs-5">Information</h6>
+          <div class="row mb-3">
+            <div class="col-sm-6">
+              <p class="mb-1 fw-bold">Gender</p>
+              <h6 class="text-muted">
+                {{ author?.gender }}
+              </h6>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-1 fw-bold">Phone</p>
+              <h6 class="text-muted">{{ author?.contactNumber }}</h6>
+            </div>
+          </div>
+
+          <!-- <h6 class="mb-3 pt-3 pb-2 border-bottom fw-bold fs-5">Projects</h6> -->
+          <div class="row">
+            <div class="col-sm-6">
+              <p class="mb-1 fw-bold">Address</p>
+              <h6 class="text-muted">{{ author?.address }}</h6>
+            </div>
+            <div class="col-sm-6">
+              <p class="mb-1 fw-bold">DOB</p>
+              <h6 class="text-muted">
+                {{ author?.dob | date : "dd MMM yyyy" }}
+              </h6>
+            </div>
+          </div>
+        </div>
+
+        <ul
+          class="social-link list-unstyled d-flex justify-content-start gap-3 ps-4 pb-4"
+        >
+          <li>
+            <a href="#"><i class="mdi mdi-facebook text-primary fs-4"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="mdi mdi-twitter text-info fs-4"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="mdi mdi-instagram text-danger fs-4"></i></a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  
+</div>

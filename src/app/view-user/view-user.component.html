@@ -1,0 +1,57 @@
+<div *ngIf="user" class="user-details-container">
+  <h2 class="title">User Details</h2>
+
+  <div class="user-detail">
+    <!-- <strong>Profile Image:</strong> -->
+    <img src="female-profile1.png" alt="Profile Image" width="100" />
+  </div>
+  <div class="user-detail">
+    <strong>Name:</strong>
+    <p>{{ user.name }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Username:</strong>
+    <p>{{ user.userName }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Date of Birth:</strong>
+    <p>{{ user.dob | date }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Gender:</strong>
+    <p>{{ user.gender }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Address:</strong>
+    <p>{{ user.address }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Contact Number:</strong>
+    <p>{{ user.contactNumber }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Pincode:</strong>
+    <p>{{ user.pincode }}</p>
+  </div>
+
+  <div class="user-detail">
+    <strong>Access Role:</strong>
+    <p>{{ user.accessRole }}</p>
+  </div>
+  <!-- 
+  <div class="user-detail">
+    <strong>Profile Image:</strong>
+    <img src="female-profile1.png" alt="Profile Image" width="100" />
+  </div> -->
+</div>
+
+<!-- Show loading message if user data is not loaded yet -->
+<div *ngIf="!user" class="loading-message">
+  <p>Loading...</p>
+</div>

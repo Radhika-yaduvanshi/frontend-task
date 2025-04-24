@@ -1,54 +1,113 @@
-/* Custom Styles */
-.user-table-container {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+body {
+  font-family: 'lato', sans-serif;
+}
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2 {
+  font-size: 26px;
+  margin: 20px 0;
+  text-align: center;
+  small {
+    font-size: 0.5em;
+  }
+}
+
+.responsive-table {
+  li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+  }
+  .col-1 {
+    flex-basis: 10%;
+  }
+  .col-2 {
+    flex-basis: 40%;
+  }
+  .col-3 {
+    flex-basis: 25%;
+  }
+  .col-4 {
+    flex-basis: 25%;
   }
   
-  .table-heading {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #333;
+  @media all and (max-width: 767px) {
+    .table-header {
+      display: none;
+    }
+    .table-row{
+      
+    }
+    li {
+      display: block;
+    }
+    .col {
+      
+      flex-basis: 100%;
+      
+    }
+    .col {
+      display: flex;
+      padding: 10px 0;
+      &:before {
+        color: #6C7A89;
+        padding-right: 10px;
+        content: attr(data-label);
+        flex-basis: 50%;
+        text-align: right;
+      }
+    }
   }
-  
-  .table-wrapper {
-    margin-top: 20px;
-  }
-  
-  .custom-table td, .custom-table th {
-    vertical-align: middle;
-  }
-  
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ddd;
-  }
-  
-  .delete-btn {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .delete-btn:hover {
-    background-color: #c82333;
-  }
-  
-  .pagination-container {
-    padding: 10px;
-  }
-  
-  /* Ensure pagination controls are aligned well */
-  pagination-controls {
-    display: inline-block;
-    margin-top: 10px;
-  }
-  
+ /* Centering search bar */
+ .search-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* This will center it vertically */
+  margin-bottom: 20px;
+  height: 100%; /* Ensure the wrapper takes full height */
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+  color: #888;
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  width: 100%;
+}
+}
