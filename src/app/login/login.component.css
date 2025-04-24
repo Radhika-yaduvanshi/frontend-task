@@ -211,4 +211,43 @@
           .login-header {
             font-size: 24px;
           }
+
+          /* Ensure the reCAPTCHA widget container has enough space */
+.g-recaptcha {
+  margin-top: 20px; /* Add some space above */
+  margin-bottom: 20px; /* Add some space below */
+  transform: scale(1); /* Ensure it's not scaled down */
+  transform-origin: 0 0; /* Adjusts the origin of the transform */
+  display: inline-block; /* Ensure it behaves as an inline-block */
+  width: 100%; /* Take up full width */
+  height: auto; /* Let the height adjust according to content */
+  position: relative; /* Ensure it's positioned properly */
+}
+
+/* Optional: Add a background to the form */
+.login-card {
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  position: relative; /* Make sure it is above any overlapping elements */
+}
+
+/* Optional: Ensure form inputs don't overlap the reCAPTCHA */
+.form-control {
+  z-index: 1;
+}
+/* Ensure the entire form doesn't have any overflow issues */
+body, .login-container {
+  overflow: visible !important; /* Make sure that nothing is hidden */
+}
+
+/* Ensure the reCAPTCHA widget is on top if necessary */
+.g-recaptcha {
+  position: relative;
+  z-index: 9999; /* Bring the reCAPTCHA to the front */
+}
+
+
         }

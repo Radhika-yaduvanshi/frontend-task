@@ -12,13 +12,13 @@ export class HeaderComponent {
 
     // Method to check if the user is logged in
     isLoggedIn(): boolean {
-      return localStorage.getItem('token') !== null;
+      return localStorage.getItem('auth-token') !== null;
     }
   
 
   logout(){
-    localStorage.removeItem('token');  // Remove token from localStorage
-    this.router.navigate(['/adminlogin']);
+    localStorage.removeItem('auth-token');  // Remove token from localStorage
+    this.router.navigate(['/login']);
   }
 
 }

@@ -76,38 +76,126 @@ h2 {
       }
     }
   }
- /* Centering search bar */
- .search-wrapper {
+ 
+
+  /* General search wrapper centering */
+.search-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; /* This will center it vertically */
-  margin-bottom: 20px;
-  height: 100%; /* Ensure the wrapper takes full height */
+  margin: 30px 0;
 }
 
+/* Stylish search bar */
 .search-box {
-  display: flex;
-  align-items: center;
-  background-color: #f1f1f1;
-  border-radius: 30px;
-  padding: 10px 20px;
+  position: relative;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 30px;
+  padding: 10px 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.search-box:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .search-icon {
-  color: #888;
   font-size: 18px;
+  color: #aaa;
   margin-right: 10px;
 }
 
 .search-input {
+  flex-grow: 1;
   border: none;
-  outline: none;
   background: transparent;
   font-size: 16px;
-  width: 100%;
+  color: #333;
+  outline: none;
 }
+
+.search-input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+.clear-icon {
+  cursor: pointer;
+  color: #ccc;
+  margin-left: 10px;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.clear-icon:hover {
+  color: #666;
+}
+.avatar-initials {
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+
+/* Wrapper with vertical spacing */
+.search-wrapper {
+  margin: 40px 0; /* top & bottom spacing */
+  display: flex;
+  justify-content: center;
+}
+
+/* Search box container */
+.search-box {
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+}
+
+/* Search icon */
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+/* Input field styling */
+.search-input {
+  width: 100%;
+  padding: 12px 16px 12px 40px; /* left padding for icon space */
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #fff;
+}
+
+/* Focus effect */
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Optional: subtle placeholder style */
+.search-input::placeholder {
+  color: #aaa;
+}
+
+
 }

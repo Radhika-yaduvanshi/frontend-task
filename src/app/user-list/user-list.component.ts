@@ -20,10 +20,14 @@ export class UserListComponent {
   constructor(private userService: AuthenticationService) {}
   ngOnInit(): void {
     // debugger;
-    this.loadAllUsers();
-
+    // this.loadAllUsers();
+    // // localStorage.removeItem('auth-token');
+    // localStorage.getItem('auth-token')
+    console.log("in ngOnit");
+    
     this.userService.getAllusers().subscribe({
       next: (data) => {
+        this.userService.getToken()
         console.log('Users fetched:', data); // Debug log
         this.users = data;
       },
@@ -94,4 +98,20 @@ export class UserListComponent {
   onPageChange(page: number): void {
     this.page = page;
   }
+
+  showImage: boolean = true;
+
+  // When image fails to load, this runs
+  onImageError() {
+    this.showImage = false;
+  }
+
+  // Generate initials from full name
+  getInitials(fullName: string): string {
+    if (!fullName) return '';
+    const nameParts = fullName.trim().split('.');
+    const first = nameParts[0]?.charAt(0).toUpperCase() || '';
+    const last = nameParts[1]?.charAt(0).toUpperCase() || '';
+    return first + last;
+  } 
 }

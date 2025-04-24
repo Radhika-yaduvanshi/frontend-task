@@ -45,9 +45,9 @@ export class EditUserComponent {
 
     // Fetch the existing user data to populate the form
     this.userService.getUserById(this.userId).subscribe((user) => {
-      // Format the date before setting it in the form
-      const formattedDate = this.datePipe.transform(user.dob, 'yyyy-MM-dd');
-      user.dob = formattedDate;
+      const updatedUser = this.userForm.value;
+      updatedUser.dob = this.datePipe.transform(updatedUser.dob, 'yyyy-MM-dd');
+      
       console.log('user id is ' + this.userId);
 
       this.userForm.patchValue(user);
@@ -70,7 +70,7 @@ export class EditUserComponent {
 
     // Send the form data to the backend
     this.userService
-      .updateUser(this.userId, updatedUser, this.selectedImage)
+      .updateUser( updatedUser,this.userId)
       .subscribe({
         next: (response) => {
           console.log('user id is : ' + this.userId);

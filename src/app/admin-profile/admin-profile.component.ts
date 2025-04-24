@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-profile',
@@ -9,6 +10,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrl: './admin-profile.component.css'
 })
 export class AdminProfileComponent {
+user: any;
+
   getProfileImageUrl(imagePath: string): string {
      // 👈 Adjust to your backend's base URL
      return ""
@@ -18,6 +21,7 @@ export class AdminProfileComponent {
   errorMessage: string = '';
   private userService = inject(AuthenticationService);
   private domSanitizer = inject(DomSanitizer);
+  private router = inject(Router)
 
   ngOnInit() {
     this.userService.getUserIdFromToken().subscribe({
@@ -41,6 +45,11 @@ export class AdminProfileComponent {
         this.errorMessage = 'Could not fetch user ID from token.';
       }
     });
+  }
+
+
+  update(userId: number): any {
+    this.router.navigate(['/edit-profile', userId]);
   }
 
   sanitizeHTML(html: string): SafeHtml {

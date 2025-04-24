@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthenticationService {
+
   updateAuthor(author: any) {
     throw new Error('Method not implemented.');
   }
@@ -42,7 +43,7 @@ export class AuthenticationService {
     localStorage.setItem(this.tokenKey, token);
   }
   clearToken(): void {
-    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.tokenKey);``
   }
 
   getUserIdFromToken(): Observable<number> {
@@ -78,9 +79,20 @@ export class AuthenticationService {
     };
   }
 
+  // getAllusers(): Observable<any> {
+  //   return this.http.get(`${this.apiUrl}/getAllUsers`, {
+  //     ...this.getAuthHeaders()// or 'text', 'blob', etc. based on what your API returns
+  //   });
+  // }
   getAllusers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/getAllUsers`);
+    const token = this.getToken(); // Assuming this method exists
+    return this.http.get(`${this.apiUrl}/getalluser`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
+  
 
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteUser/${userId}`, {
@@ -92,36 +104,31 @@ export class AuthenticationService {
     return `${this.apiUrl}/user/${imagePath}`;
   }
 
-  updateUser(id: number, updatedUser: any, selectedImage: File) {
-    const formData = new FormData();
-
-    // Append JSON object
-    formData.append('user', JSON.stringify(updatedUser));
-
-    // If an image is selected, append it as well
-    if (selectedImage) {
-      formData.append('image', selectedImage, selectedImage.name);
-    }
-
-    // Append user ID
-    formData.append('id', id.toString());
-
-    console.log('token in update : ' + this.getToken());
-
-    // Set the Authorization header only (do not manually set Content-Type for FormData)
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      'Bearer ' + this.getToken()
-    );
-
-    // Make the PUT request with form data
-    return this.http.put(`${this.apiUrl}/update`, formData, { headers });
+  updateUser(user: any, id: number): Observable<string> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, user, { responseType: 'text' });
   }
-
   searchUsers(keyword: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/search?keyword=${keyword}`, {
       ...this.getAuthHeaders(),
       responseType: 'json', // or 'text', 'blob', etc. based on what your API returns
     });
+  }
+
+
+  forgotPassword(email: string) {
+    console.log(email)
+    return this.http.post(this.apiUrl + `/forgot-password/${email}`, null);
+  }
+ 
+  validateToken(token: string) {
+    return this.http.get<boolean>( this.apiUrl + `/validate-token/${token}`);
+  }
+ 
+  resetPassword(token: string, newPassword: string) {
+    console.log(newPassword)
+    return this.http.post( this.apiUrl + `/reset-password/${token}`, {"password": newPassword});
+
+    
+    
   }
 }

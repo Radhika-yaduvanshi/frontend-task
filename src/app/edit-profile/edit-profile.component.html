@@ -1,1 +1,122 @@
-<p>edit-profile works!</p>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        formControlName="name"
+        type="text"
+        class="form-control"
+        placeholder="Enter your name"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="dob">Date of Birth</label>
+      <input
+        id="dob"
+        formControlName="dob"
+        type="date"
+        class="form-control"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        formControlName="userName"
+        type="text"
+        class="form-control"
+        placeholder="Enter username"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender" class="form-control" required>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+        <option value="OTHER">Other</option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input
+        id="address"
+        formControlName="address"
+        type="text"
+        class="form-control"
+        placeholder="Enter your address"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="contactNumber">Contact Number</label>
+      <input
+        id="contactNumber"
+        formControlName="contactNumber"
+        type="text"
+        class="form-control"
+        placeholder="Enter contact number"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="pincode">Pincode</label>
+      <input
+        id="pincode"
+        formControlName="pincode"
+        type="text"
+        class="form-control"
+        placeholder="Enter pincode"
+        required
+      />
+    </div>
+  
+    <!-- File input for profile image
+    <div class="form-group">
+      <label for="profileImage">Profile Image</label>
+      <input
+        id="profileImage"
+        type="file"
+        class="form-control"
+        (change)="onFileChange($event)"
+      />
+    </div> -->
+  
+    <div class="form-group">
+      <label for="accessRole">Access Role</label>
+      <select
+        id="accessRole"
+        formControlName="accessRole"
+        class="form-control"
+        required
+      >
+        <option value="USER">User</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+  
+    <!-- <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Enter password"
+        required
+      /> -->
+    <!-- </div> -->
+  
+    <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+      Submit
+    </button>
+  </form>
+  

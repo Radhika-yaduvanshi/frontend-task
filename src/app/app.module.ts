@@ -8,13 +8,14 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
+  HTTP_INTERCEPTORS,
   HttpClientModule,
   provideHttpClient,
   withInterceptors,
 } from '@angular/common/http';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { authGuard } from './services/auth.guard';
-import { authInterceptor } from './interceptors/auth.interceptor';
+// import { AuthInterceptor, authInterceptor } from './interceptors/auth.interceptor';
 import { UserListComponent } from './user-list/user-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
@@ -22,6 +23,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { DatePipe } from '@angular/common';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     EditUserComponent,
     ViewUserComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -43,8 +48,17 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    
   ],
-  providers: [DatePipe, provideHttpClient(withInterceptors([authInterceptor]))],
+  // providers: [DatePipe, provideHttpClient(withInterceptors([authInterceptor]))],
+  providers: [
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

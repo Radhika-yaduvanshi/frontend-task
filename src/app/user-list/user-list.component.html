@@ -1,13 +1,15 @@
-<link
+<!-- <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/>
+/> -->
 
-<div class="search-container">
+<!-- Search bar -->
+<div class="search-wrapper">
   <div class="search-box">
-    <i class="fa fa-search search-icon"></i>
+    <i class="fas fa-search search-icon"></i>
     <input
       type="text"
+      name="search"
       placeholder="Search users..."
       [(ngModel)]="searchKeyword"
       (input)="searchUsers()"
@@ -15,6 +17,7 @@
     />
   </div>
 </div>
+
 
 <!-- <ul>
     <li *ngFor="let user of users">{{ user.name }} - {{ user.userName }}</li>
@@ -35,14 +38,23 @@
       let user of users | paginate : { itemsPerPage: 5, currentPage: page }
     "
   >
-    <div class="col col-1" data-label="Profile">
-      <img
-        src="female-profile1.png"
-        alt="Profile"
-        class="user-avatar img-fluid"
-        style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover"
-      />
+  <div class="col col-1" data-label="Profile">
+    <!-- Try to show image -->
+    <img
+      *ngIf="showImage"
+      [src]="user.profileImage"
+      alt="Profile"
+      (error)="onImageError()"
+      class="user-avatar img-fluid"
+      style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover"
+    />
+  
+    <!-- If image fails, show initials -->
+    <div *ngIf="!showImage" class="avatar-initials">
+      {{ getInitials(user.userName) }}
     </div>
+  </div>
+  
     <div class="col col-2" data-label="Username">{{ user.userName }}</div>
     <div class="col col-3" data-label="DOB">
       {{ user.dob | date : "mediumDate" }}
@@ -75,6 +87,7 @@
     </div>
   </li>
 </ul>
+
 
 <!-- Pagination -->
 <div class="pagination-container text-center mt-3">
