@@ -1,96 +1,103 @@
-<!-- <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/> -->
-
-<!-- Search bar -->
-<div class="search-wrapper">
-  <div class="search-box">
-    <i class="fas fa-search search-icon"></i>
-    <input
-      type="text"
-      name="search"
-      placeholder="Search users..."
-      [(ngModel)]="searchKeyword"
-      (input)="searchUsers()"
-      class="search-input"
-    />
-  </div>
-</div>
-
-
-<!-- <ul>
-    <li *ngFor="let user of users">{{ user.name }} - {{ user.userName }}</li>
-  </ul> -->
-
-<ul class="responsive-table">
-  <li class="table-header">
-    <div class="col col-1">Profile</div>
-    <div class="col col-2">Username</div>
-
-    <div class="col col-3">DOB</div>
-    <div class="col col-4">Actions</div>
-  </li>
-
-  <li
-    class="table-row"
-    *ngFor="
-      let user of users | paginate : { itemsPerPage: 5, currentPage: page }
-    "
-  >
-  <div class="col col-1" data-label="Profile">
-    <!-- Try to show image -->
-    <img
-      *ngIf="showImage"
-      [src]="user.profileImage"
-      alt="Profile"
-      (error)="onImageError()"
-      class="user-avatar img-fluid"
-      style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover"
-    />
-  
-    <!-- If image fails, show initials -->
-    <div *ngIf="!showImage" class="avatar-initials">
-      {{ getInitials(user.userName) }}
+<div class="table-container">
+  <!-- Search Bar -->
+  <div class="search-wrapper mb-4 d-flex justify-content-center">
+    <div
+      class="search-box rounded-pill bg-light px-3 py-2 d-flex align-items-center"
+      style="width: 100%; max-width: 400px"
+    >
+      <i class="fas fa-search me-2 text-muted"></i>
+      <input
+        type="text"
+        name="search"
+        placeholder="Search users..."
+        [(ngModel)]="searchKeyword"
+        (input)="searchUsers()"
+        class="form-control border-0 bg-light"
+        style="border-radius: 50px; outline: none"
+      />
     </div>
   </div>
-  
-    <div class="col col-2" data-label="Username">{{ user.userName }}</div>
-    <div class="col col-3" data-label="DOB">
-      {{ user.dob | date : "mediumDate" }}
-    </div>
-    <div class="col col-4" data-label="Actions">
-      <button class="btn btn-sm" (click)="view(user.id)">
-        <img
-          src="grid.png"
-          alt="Delete"
-          style="width: 20px; height: 20px"
-          title="Delete (Icon by Graphics Plazza - Flaticon)"
-        />
-      </button>
-      <button class="btn btn-sm" (click)="update(user.id)">
-        <img
-          src="pen.png"
-          alt="Delete"
-          style="width: 20px; height: 20px"
-          title="Delete (Icon by Graphics Plazza - Flaticon)"
-        />
-      </button>
-      <button class="btn btn-sm" (click)="deleteUser(user.id)">
-        <img
-          src="trash.png"
-          alt="Delete"
-          style="width: 20px; height: 20px"
-          title="Delete (Icon by Graphics Plazza - Flaticon)"
-        />
-      </button>
-    </div>
-  </li>
-</ul>
 
+  <!-- User Table -->
+  <table class="table custom-table text-center">
+    <caption class="text-start">
+      List of users
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Profile</th>
+        <th scope="col">Username</th>
+        <th scope="col">DOB</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <ng-container *ngIf="showImage && user.profileImage; else initials">
+            <img
+              [src]="user.profileImage"
+              alt="Profile"
+              (error)="onImageError()"
+              style="
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                object-fit: cover;
+              "
+            />
+          </ng-container>
 
-<!-- Pagination -->
-<div class="pagination-container text-center mt-3">
-  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+          <ng-template #initials>
+            <div
+              style="
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                background-color: #007bff;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 14px;
+              "
+            >
+              {{ getInitials(user.userName) }}
+            </div>
+          </ng-template>
+        </td>
+        <td>{{ user.userName }}</td>
+        <td>{{ user.dob | date : "mediumDate" }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-outline-primary me-1"
+            (click)="view(user.id)"
+          >
+            <img src="grid.png" alt="View" style="width: 18px; height: 18px" />
+          </button>
+          <button
+            class="btn btn-sm btn-outline-warning me-1"
+            (click)="update(user.id)"
+          >
+            <img src="pen.png" alt="Edit" style="width: 18px; height: 18px" />
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            (click)="deleteUser(user.id)"
+          >
+            <img
+              src="trash.png"
+              alt="Delete"
+              style="width: 18px; height: 18px"
+            />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<!-- </div> -->
+
+<!-- Pagination remains same -->

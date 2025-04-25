@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthenticationService {
-
   updateAuthor(author: any) {
     throw new Error('Method not implemented.');
   }
@@ -43,7 +42,8 @@ export class AuthenticationService {
     localStorage.setItem(this.tokenKey, token);
   }
   clearToken(): void {
-    localStorage.removeItem(this.tokenKey);``
+    localStorage.removeItem(this.tokenKey);
+    ``;
   }
 
   getUserIdFromToken(): Observable<number> {
@@ -84,15 +84,20 @@ export class AuthenticationService {
   //     ...this.getAuthHeaders()// or 'text', 'blob', etc. based on what your API returns
   //   });
   // }
-  getAllusers(): Observable<any> {
-    const token = this.getToken(); // Assuming this method exists
-    return this.http.get(`${this.apiUrl}/getalluser`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  // getAllusers(): Observable<any> {
+  //   const token = this.getToken(); // Assuming this method exists
+  //   return this.http.get(`${this.apiUrl}/getalluser`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  // }
+
+  getAllusers(page: number = 0, size: number = 10): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/getalluser?page=${page}&size=${size}`
+    );
   }
-  
 
   deleteUser(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/deleteUser/${userId}`, {
@@ -104,8 +109,10 @@ export class AuthenticationService {
     return `${this.apiUrl}/user/${imagePath}`;
   }
 
-  updateUser(user: any, id: number): Observable<string> {
-    return this.http.put(`${this.apiUrl}/update/${id}`, user, { responseType: 'text' });
+  updateUser(userData: any, id: number): Observable<string> {
+    return this.http.put(`${this.apiUrl}/update/${id}`, userData, {
+      responseType: 'text',
+    });
   }
   searchUsers(keyword: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/search?keyword=${keyword}`, {
@@ -114,21 +121,19 @@ export class AuthenticationService {
     });
   }
 
-
   forgotPassword(email: string) {
-    console.log(email)
+    console.log(email);
     return this.http.post(this.apiUrl + `/forgot-password/${email}`, null);
   }
- 
-  validateToken(token: string) {
-    return this.http.get<boolean>( this.apiUrl + `/validate-token/${token}`);
-  }
- 
-  resetPassword(token: string, newPassword: string) {
-    console.log(newPassword)
-    return this.http.post( this.apiUrl + `/reset-password/${token}`, {"password": newPassword});
 
-    
-    
+  validateToken(token: string) {
+    return this.http.get<boolean>(this.apiUrl + `/validate-token/${token}`);
+  }
+
+  resetPassword(token: string, newPassword: string) {
+    console.log(newPassword);
+    return this.http.post(this.apiUrl + `/reset-password/${token}`, {
+      password: newPassword,
+    });
   }
 }

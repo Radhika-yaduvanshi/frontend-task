@@ -14,6 +14,7 @@ export class EditUserComponent {
   userForm!: FormGroup;
   userId!: number;
   selectedImage!: File;
+  user: any;
 
   constructor(
     private fb: FormBuilder,
@@ -42,14 +43,8 @@ export class EditUserComponent {
       accessRole: ['', Validators.required],
       // password: ['', Validators.required],
     });
-
-    // Fetch the existing user data to populate the form
     this.userService.getUserById(this.userId).subscribe((user) => {
-      const updatedUser = this.userForm.value;
-      updatedUser.dob = this.datePipe.transform(updatedUser.dob, 'yyyy-MM-dd');
-      
-      console.log('user id is ' + this.userId);
-
+      user.dob = this.datePipe.transform(user.dob, 'yyyy-MM-dd'); // format before patching
       this.userForm.patchValue(user);
     });
   }
@@ -69,22 +64,21 @@ export class EditUserComponent {
     const updatedUser = this.userForm.value; // Get the updated user data from the form
 
     // Send the form data to the backend
-    this.userService
-      .updateUser( updatedUser,this.userId)
-      .subscribe({
-        next: (response) => {
-          console.log('user id is : ' + this.userId);
+    this.userService.updateUser(updatedUser, this.userId).subscribe({
+      next: (response) => {
+        console.log('user id is : ' + this.userId);
 
-          alert('User updated successfully');
-          console.log('Success:', response);
-          this.router.navigate(['/user-list']); // Navigate to the users list or another page
-        },
-        error: (error) => {
-          alert('Error updating user');
-          console.log('user id is : ' + this.userId);
+        this.user = response;
+        alert('User updated successfully');
+        console.log('Success:', response);
+        this.router.navigate(['/user-list']); // Navigate to the users list or another page
+      },
+      error: (error) => {
+        alert('Error updating user');
+        console.log('user id is : ' + this.userId);
 
-          console.error('Error:', error);
-        },
-      });
+        console.error('Error:', error);
+      },
+    });
   }
 }

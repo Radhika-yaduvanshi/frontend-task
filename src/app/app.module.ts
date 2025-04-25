@@ -39,7 +39,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ViewUserComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -48,7 +47,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    
   ],
   // providers: [DatePipe, provideHttpClient(withInterceptors([authInterceptor]))],
   providers: [
@@ -57,7 +55,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent],
 })

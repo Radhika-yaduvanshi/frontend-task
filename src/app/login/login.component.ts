@@ -1,10 +1,8 @@
-import { Component, inject, OnInit,  AfterViewInit } from '@angular/core';
+import { Component, inject, OnInit, AfterViewInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
-
-
 
 declare global {
   interface Window {
@@ -21,19 +19,17 @@ declare const grecaptcha: any;
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-
-// onCaptcha($event: Event) {
-//   this.captchaResponse = response;
-// }
+  // onCaptcha($event: Event) {
+  //   this.captchaResponse = response;
+  // }
   // Method called when the reCAPTCHA response is resolved
 
-captchaResponse: string = ''; // Variable to store reCAPTCHA response
+  captchaResponse: string = ''; // Variable to store reCAPTCHA response
   loginForm!: FormGroup;
 
   password: any;
   loading: boolean = false;
   errmsg: string = '';
-
 
   // private tokenKey = 'auth-token';
 
@@ -43,7 +39,7 @@ captchaResponse: string = ''; // Variable to store reCAPTCHA response
 
   // constructor(private fb: FormBuilder) {}
   onCaptchaResolved(response: string) {
-    this.captchaResponse = response;  // Store the reCAPTCHA response
+    this.captchaResponse = response; // Store the reCAPTCHA response
   }
 
   ngOnInit(): void {
@@ -52,13 +48,13 @@ captchaResponse: string = ''; // Variable to store reCAPTCHA response
       userName: ['', Validators.required],
       password: ['', Validators.required],
     });
+
     localStorage.clear();
     const script = document.createElement('script');
     script.src = 'https://www.google.com/recaptcha/api.js';
     script.async = true;
     script.defer = true;
     document.body.appendChild(script);
-   
   }
 
   // You can handle form submission here
@@ -74,8 +70,6 @@ captchaResponse: string = ''; // Variable to store reCAPTCHA response
         return;
       }
     }
-
-
 
     // const recaptchaResponse = grecaptcha.getResponse(); // Get the response from reCAPTCHA
 

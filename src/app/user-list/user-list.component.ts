@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, resolveForwardRef } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -11,25 +11,34 @@ import { FormControl } from '@angular/forms';
 })
 export class UserListComponent {
   users: any[] = [];
-  page: number = 1;
+  // page: number = 1;
   searchKeyword: string = '';
   searchControl = new FormControl('');
+  totalusers: number = 0;
+  pageSize: number = 10;
+  currentPage = 1;
 
-  router = inject(Router);
+  // router = inject(Router);
 
-  constructor(private userService: AuthenticationService) {}
+  constructor(
+    private router: Router,
+    private userService: AuthenticationService
+  ) {}
   ngOnInit(): void {
     // debugger;
-    // this.loadAllUsers();
+    this.loadAllUsers(this.currentPage - 1);
     // // localStorage.removeItem('auth-token');
     // localStorage.getItem('auth-token')
-    console.log("in ngOnit");
-    
-    this.userService.getAllusers().subscribe({
+    console.log('in ngOnit');
+
+    this.userService.getAllusers(this.currentPage - 1, 10).subscribe({
       next: (data) => {
-        this.userService.getToken()
+        this.userService.getToken();
         console.log('Users fetched:', data); // Debug log
-        this.users = data;
+        this.users = data.content;
+        this.totalusers = data.totalElements;
+
+        this.currentPage = data.number + 1;
       },
       error: (error) => {
         console.error('Error fetching users:', error);
@@ -40,23 +49,30 @@ export class UserListComponent {
 
   searchUsers(): void {
     if (this.searchKeyword.trim() === '') {
-      this.loadAllUsers(); // fallback to show all users
+      this.loadAllUsers(this.currentPage - 1);
       return;
     }
 
     this.userService.searchUsers(this.searchKeyword).subscribe((res) => {
-      this.users = res;
+      this.users = res.content;
     });
   }
 
   clearSearch() {
     this.searchKeyword = '';
-    this.loadAllUsers(); // Or clear this.users = [];
+    this.loadAllUsers(this.currentPage - 1);
   }
 
-  loadAllUsers(): void {
-    this.userService.getAllusers().subscribe((res) => {
-      this.users = res;
+  loadAllUsers(page: number): void {
+    this.userService.getAllusers(page, 10).subscribe({
+      next: (response) => {
+        console.log('Paginated Users fetched:', response);
+        this.users = response.content; // .content contains the actual user list
+        this.totalusers = response.totalElements;
+      },
+      error: (error) => {
+        console.error('Error fetching users:', error);
+      },
     });
   }
 
@@ -96,7 +112,8 @@ export class UserListComponent {
   }
 
   onPageChange(page: number): void {
-    this.page = page;
+    this.currentPage = page;
+    this.loadAllUsers(this.currentPage - 1); // again, backend uses 0-based page
   }
 
   showImage: boolean = true;
@@ -113,5 +130,11 @@ export class UserListComponent {
     const first = nameParts[0]?.charAt(0).toUpperCase() || '';
     const last = nameParts[1]?.charAt(0).toUpperCase() || '';
     return first + last;
-  } 
+  }
+
+  getDisplayedRange(): string {
+    const start = (this.currentPage - 1) * this.pageSize + 1;
+    const end = Math.min(this.currentPage * this.pageSize, this.totalusers);
+    return `${start} – ${end} of ${this.totalusers} users`;
+  }
 }
