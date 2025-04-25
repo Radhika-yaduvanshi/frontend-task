@@ -1,0 +1,73 @@
+/* Container to center the form */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto; /* Center and add spacing from top */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for form groups */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Label styling */
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  /* Form control input/select styling */
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Focus effect */
+  .form-control:focus {
+    border-color: #0056b3;
+    outline: none;
+  }
+  
+  /* Placeholder color */
+  .form-control::placeholder {
+    color: #888;
+  }
+  
+  /* Submit button */
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Submit hover */
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Disabled state */
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

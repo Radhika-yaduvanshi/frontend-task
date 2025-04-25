@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class AdminProfileComponent {
 user: any;
+showImage: boolean = true;
 
   getProfileImageUrl(imagePath: string): string {
      // 👈 Adjust to your backend's base URL
@@ -55,6 +56,17 @@ user: any;
   sanitizeHTML(html: string): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(html);
   }
+  onImageError() {
+    this.showImage = false;
+  }
 
+    // Generate initials from full name
+    getInitials(fullName: string): string {
+      if (!fullName) return '';
+      const nameParts = fullName.trim().split('.');
+      const first = nameParts[0]?.charAt(0).toUpperCase() || '';
+      const last = nameParts[1]?.charAt(0).toUpperCase() || '';
+      return first + last;
+    }
 
 }

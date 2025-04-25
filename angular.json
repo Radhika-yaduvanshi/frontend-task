@@ -74,8 +74,6 @@
             "development": {
               "buildTarget": "AdminPanel:build:development"
             }
-          }, "options": {
-            "proxyConfig": "angular.config.json"
           },
           "defaultConfiguration": "development"
         },

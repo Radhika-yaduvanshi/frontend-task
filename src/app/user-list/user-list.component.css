@@ -1,40 +1,148 @@
 .table-container {
-  margin: 30px 20px 0 20px; /* top, right, bottom, left */
-  border: 2px solid #007bff;  /* Add border to the container */
-  border-radius: 10px;         /* Optional: rounds the corners of the container */
-  padding: 20px;               /* Adds padding inside the container */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 30px 20px 19px 20px;
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.15);
+  background-color: #fff;
+  overflow-x: auto; /* for horizontal scroll on small screens */
+}
+
+/* Table Styling */
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .custom-table th,
 .custom-table td {
   background-color: white;
-  border: 1px solid #ddd;     /* Add border to the table cells */
-  border-radius: 1rem;        /* Keep rounded corners */
-  padding: 10px 12px;         /* Padding inside cells */
-  box-shadow: none;           /* Remove shadow if it's interfering */
+  border: 1px solid #e0e0e0;
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .custom-table thead th {
-  background-color: #f8f9fa;
+  background-color: #f1f5f9;
   color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.custom-table thead th {
-  background-color: #f8f9fa;
-  color: #333;
+.custom-table tbody tr:hover {
+  background-color: #f9f9f9;
 }
 
+.custom-table img {
+  max-width: 100%;
+}
+
+/* Search Box */
 .search-wrapper {
   margin: 20px 15px;
 }
 
-.search-box input::placeholder {
-  color: #888;
+.search-box input {
+  border-radius: 50px;
+  padding-left: 10px;
+  font-size: 14px;
 }
 
 .search-box {
-  box-shadow: 0 2px 5px rgba(191, 146, 146, 0.1);
+  width: 100%;
+  max-width: 400px;
+  background: #f9f9f9;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Pagination */
+button.btn-secondary {
+  margin: 10px 5px;
+  font-size: 14px;
+  padding: 5px 12px;
+  border-radius: 5px;
+}
 
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+    margin: 20px 10px;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .search-box {
+    width: 100%;
+    padding: 8px 12px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+/* Pagination Wrapper */
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Add spacing between buttons */
+  margin-top: 20px;
+  text-align: center;
+  flex-wrap: wrap; /* To make it responsive */
+}
+
+/* Pagination Buttons */
+.pagination  {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 5px;
+  outline: none;
+}
+
+.pagination-wrapper .btn-pagination:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.pagination-wrapper .btn-pagination:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Pagination Info */
+.pagination-wrapper .page-info {
+  font-size: 14px;
+  color: #444;
+  font-weight: 600;
+  margin: 5px 0;
+}
+
+.pagination-wrapper span {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.page-continer{
+  margin-top: 10px;
+}
+span{
+  margin-left: 10px;
+}
+}

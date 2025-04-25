@@ -16,6 +16,8 @@
         style="border-radius: 50px; outline: none"
       />
     </div>
+    <button (click)="downloadUserExcel()" class="btn btn-primary ms-3">Download</button>
+
   </div>
 
   <!-- User Table -->
@@ -25,7 +27,7 @@
     </caption>
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">No</th>
         <th scope="col">Profile</th>
         <th scope="col">Username</th>
         <th scope="col">DOB</th>
@@ -34,7 +36,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of users; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
+        <th scope="row">{{ i+(page>0?page*10+1:page+1) }}</th>
         <td>
           <ng-container *ngIf="showImage && user.profileImage; else initials">
             <img
@@ -101,3 +103,31 @@
 </div>
 
 <!-- Pagination remains same -->
+<!-- <button class="btn btn-secondary" (click)="onPageChange(page - 1)" [disabled]="page === 0">Previous</button>
+<span>Page {{ page + 1 }} of {{ totalPages }}</span>
+<button class="btn btn-secondary" (click)="onPageChange(page + 1)" [disabled]="page >= totalPages - 1">Next</button>
+<br>
+elements:{{users.length}} of {{totalElements}} -->
+<div class="page-continer">
+  <button
+    class="btn btn-primary ms-3"
+    (click)="onPageChange(page - 1)"
+    [disabled]="page === 0"
+  >
+    Previous
+  </button>
+
+  <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>
+
+  <button
+    class="btn btn-primary ms-3"
+    (click)="onPageChange(page + 1)"
+    [disabled]="page >= totalPages - 1"
+  >
+    Next
+  </button>
+  <br>
+  <span>{{ users.length }} of {{ totalElements }} </span>
+</div>
+
+

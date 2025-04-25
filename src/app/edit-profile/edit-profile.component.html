@@ -1,4 +1,5 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<div class="form-container">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Name</label>
       <input
@@ -10,7 +11,7 @@
         required
       />
     </div>
-  
+
     <div class="form-group">
       <label for="dob">Date of Birth</label>
       <input
@@ -21,7 +22,7 @@
         required
       />
     </div>
-  
+
     <div class="form-group">
       <label for="username">Username</label>
       <input
@@ -33,16 +34,21 @@
         required
       />
     </div>
-  
+
     <div class="form-group">
       <label for="gender">Gender</label>
-      <select id="gender" formControlName="gender" class="form-control" required>
+      <select
+        id="gender"
+        formControlName="gender"
+        class="form-control"
+        required
+      >
         <option value="MALE">Male</option>
         <option value="FEMALE">Female</option>
         <option value="OTHER">Other</option>
       </select>
     </div>
-  
+
     <div class="form-group">
       <label for="address">Address</label>
       <input
@@ -54,7 +60,7 @@
         required
       />
     </div>
-  
+
     <div class="form-group">
       <label for="contactNumber">Contact Number</label>
       <input
@@ -66,7 +72,7 @@
         required
       />
     </div>
-  
+
     <div class="form-group">
       <label for="pincode">Pincode</label>
       <input
@@ -78,7 +84,7 @@
         required
       />
     </div>
-  
+
     <!-- File input for profile image
     <div class="form-group">
       <label for="profileImage">Profile Image</label>
@@ -89,7 +95,7 @@
         (change)="onFileChange($event)"
       />
     </div> -->
-  
+
     <div class="form-group">
       <label for="accessRole">Access Role</label>
       <select
@@ -102,7 +108,7 @@
         <option value="ADMIN">Admin</option>
       </select>
     </div>
-  
+
     <!-- <div class="form-group">
       <label for="password">Password</label>
       <input
@@ -114,9 +120,9 @@
         required
       /> -->
     <!-- </div> -->
-  
+
     <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
       Submit
     </button>
   </form>
-  
+</div>

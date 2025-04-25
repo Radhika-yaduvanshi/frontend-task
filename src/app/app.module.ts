@@ -25,6 +25,8 @@ import { ViewUserComponent } from './view-user/view-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { saveAs } from 'file-saver';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ViewUserComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    
   ],
   // providers: [DatePipe, provideHttpClient(withInterceptors([authInterceptor]))],
   providers: [

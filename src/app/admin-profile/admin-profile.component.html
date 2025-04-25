@@ -1,91 +1,224 @@
-<div
-  class="page-content page-container min-vh-100 d-flex align-items-center justify-content-center bg-light"
->
-  <div
-    class="card user-card-full shadow-lg rounded-4"
-    style="width: 950px; height: 550px"
-  >
-    <div class="row m-0 h-100">
-      <!-- Left Profile Panel -->
-      <div
-        class="col-sm-4 bg-c-lite-green user-profile text-white rounded-start d-flex flex-column align-items-center justify-content-center"
-      >
-        <div class="text-center">
-          <div class="mb-3">
-            <img
-              src="female-profile1.png"
-              alt="Profile"
-              width="110"
-              class="img-radius shadow"
-            />
-          </div>
-          <h6 class="fw-bold fs-5">{{ author?.userName }}</h6>
-          <p class="fs-6">{{ author?.accessRole }}</p>
-          <i
-            class="mdi mdi-square-edit-outline feather icon-edit mt-2 fs-5"
-          ></i>
-
-          <button class="btn btn-sm" (click)="update(author.id)">
-            <img
-              src="pen.png"
-              alt="Delete"
-              style="width: 20px; height: 20px"
-              title="Delete (Icon by Graphics Plazza - Flaticon)"
-            />Edit
-          </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile Card</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .profile-card {
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 100%;
+      max-width: 900px;
+    }
+    
+    .profile-header {
+      background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .profile-picture-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 0 auto;
+    }
+    
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 5px solid white;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .edit-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .edit-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .user-name {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    
+    .user-role {
+      font-size: 16px;
+      opacity: 0.8;
+      margin-bottom: 0;
+    }
+    
+    .profile-body {
+      padding: 30px;
+    }
+    
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+      color: #333;
+    }
+    
+    .info-group {
+      margin-bottom: 20px;
+    }
+    
+    .info-label {
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    
+    .info-value {
+      color: #777;
+      margin-bottom: 0;
+    }
+    
+    .promotion-card {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      padding: 20px;
+      border-left: 4px solid #8E54E9;
+    }
+    
+    .promotion-title {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .promotion-desc {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    
+    .check-icon {
+      color: #4776E6;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    
+    .book-call-btn {
+      background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .book-call-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <!-- Top Profile Section -->
+    <div class="profile-header">
+      <div class="profile-picture-container">
+        <img src="female-profile1.png"  class="profile-picture" alt="Profile Picture">
+        <div class="edit-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#4776E6" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+          </svg>
         </div>
       </div>
-
-      <!-- Right Info Panel -->
-      <div
-        class="col-sm-8 bg-white rounded-end d-flex flex-column justify-content-between"
-      >
-        <div class="card-block p-4">
-          <h6 class="mb-3 pb-2 border-bottom fw-bold fs-5">Information</h6>
-          <div class="row mb-3">
-            <div class="col-sm-6">
-              <p class="mb-1 fw-bold">Gender</p>
-              <h6 class="text-muted">
-                {{ author?.gender }}
-              </h6>
-            </div>
-            <div class="col-sm-6">
-              <p class="mb-1 fw-bold">Phone</p>
-              <h6 class="text-muted">{{ author?.contactNumber }}</h6>
-            </div>
-          </div>
-
-          <!-- <h6 class="mb-3 pt-3 pb-2 border-bottom fw-bold fs-5">Projects</h6> -->
-          <div class="row">
-            <div class="col-sm-6">
-              <p class="mb-1 fw-bold">Address</p>
-              <h6 class="text-muted">{{ author?.address }}</h6>
-            </div>
-            <div class="col-sm-6">
-              <p class="mb-1 fw-bold">DOB</p>
-              <h6 class="text-muted">
-                {{ author?.dob | date : "dd MMM yyyy" }}
-              </h6>
-            </div>
-          </div>
-        </div>
-
-        <!-- <ul
-          class="social-link list-unstyled d-flex justify-content-start gap-3 ps-4 pb-4"
-        >
-          <li>
-            <a href="#"><i class="mdi mdi-facebook text-primary fs-4"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="mdi mdi-twitter text-info fs-4"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="mdi mdi-instagram text-danger fs-4"></i></a>
-          </li>
-        </ul> -->
-
-
-      </div>
+      <h2 class="user-name">{{ author?.userName }}</h2>
+      <p class="user-role">{{ author?.accessRole }}</p>
     </div>
+    
+    <!-- Information Section -->
+    <div class="profile-body">
+      <h3 class="section-title">Information</h3>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-group">
+            <p class="info-label">Gender</p>
+            <p class="info-value">{{ author?.gender }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-group">
+            <p class="info-label">Phone</p>
+            <p class="info-value">{{ author?.contactNumber }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6">
+          <div class="info-group">
+            <p class="info-label">Address</p>
+            <p class="info-value">{{ author?.address }}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info-group">
+            <p class="info-label">DOB</p>
+            <p class="info-value">{{ author?.dob | date : "dd MMM yyyy" }}</p>
+          </div>
+        </div>
+      </div>
+      
+     </div>
   </div>
-</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

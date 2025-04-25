@@ -15,7 +15,7 @@ export class AuthenticationService {
   userId: number | undefined;
   constructor(private http: HttpClient) {}
 
-  private apiUrl = '/user';
+  private apiUrl = 'http://localhost:8088/user';
 
   // This is where you might save the JWT token after login
   private tokenKey = 'auth-token';
@@ -136,4 +136,17 @@ export class AuthenticationService {
       password: newPassword,
     });
   }
+
+
+  //download excelfile
+
+    // Method to download the users as an Excel file
+    downloadUsers(): Observable<Blob> {
+      const headers = new HttpHeaders().set(
+        'Accept',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      );
+  
+      return this.http.get(`${this.apiUrl}/download-users`, { headers, responseType: 'blob' });
+    }
 }
