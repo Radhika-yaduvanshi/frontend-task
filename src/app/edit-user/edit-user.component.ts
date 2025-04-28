@@ -11,10 +11,13 @@ import { DatePipe } from '@angular/common';
   styleUrl: './edit-user.component.css',
 })
 export class EditUserComponent {
+  showImage: boolean = true;
+
   userForm!: FormGroup;
   userId!: number;
   selectedImage!: File;
   user: any;
+  profileImage: any;
 
   constructor(
     private fb: FormBuilder,
@@ -34,7 +37,7 @@ export class EditUserComponent {
       userName: ['', Validators.required],
       gender: ['', Validators.required],
       address: ['', Validators.required],
-      // profileImage: [''],
+      profileImage: [''],
       contactNumber: [
         '',
         [Validators.required, Validators.pattern('^[0-9]{10}$')],
@@ -53,7 +56,40 @@ export class EditUserComponent {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
+      this.uploadProfileImage(this.userId);
     }
+  }
+
+  uploadProfileImage(userId: number) {
+    if (this.selectedImage) {
+      this.userService
+        .updateProfileImage(userId, this.selectedImage)
+        .subscribe({
+          next: (response) => {
+            console.log('Profile image updated successfully');
+            this.profileImage = URL.createObjectURL(this.selectedImage); // Add this line
+
+            // maybe show success toast?
+          },
+          error: (error) => {
+            console.error('Error updating profile image', error);
+          },
+        });
+    }
+  }
+
+  onImageError() {
+    this.profileImage = ''; // If image fails, remove it and show initials.
+    this.showImage = false; // Trigger initials to be shown.
+  }
+
+  // Generate initials from full name
+  getInitials(fullName: string): string {
+    if (!fullName) return '';
+    const nameParts = fullName.trim().split('.');
+    const first = nameParts[0]?.charAt(0).toUpperCase() || '';
+    const last = nameParts[1]?.charAt(0).toUpperCase() || '';
+    return first + last;
   }
 
   onSubmit(): void {

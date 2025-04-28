@@ -348,3 +348,164 @@ div.fg{
 }
 
 
+body {
+  background-color: #f0f2f5;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}
+
+.profile-card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.profile-picture-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.user-name {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.user-role {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 0;
+}
+
+.profile-body {
+  padding: 30px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.info-group {
+  margin-bottom: 20px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  color: #777;
+  margin-bottom: 0;
+}
+
+.promotion-card {
+  margin-top: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #8e54e9;
+}
+
+.promotion-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.promotion-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.check-icon {
+  color: #4776e6;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.book-call-btn {
+  background: linear-gradient(135deg, #4776e6 0%, #8e54e9 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.book-call-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+

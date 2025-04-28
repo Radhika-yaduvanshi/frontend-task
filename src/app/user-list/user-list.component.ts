@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { saveAs } from 'file-saver';
 
-
 @Component({
   selector: 'app-user-list',
   standalone: false,
@@ -12,17 +11,16 @@ import { saveAs } from 'file-saver';
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
-
   users: any[] = [];
   searchKeyword: string = '';
   totalusers: number = 0;
-
+  profileImage: any;
+  showImage: boolean = true;
   page: number = 0; // Backend uses 0-based page index
   pageSize: number = 10;
   totalElements: number = 0;
   totalPages: number = 0;
 
-  
   // currentPage = 1;
 
   // router = inject(Router);
@@ -37,30 +35,6 @@ export class UserListComponent {
     // // localStorage.removeItem('auth-token');
     // localStorage.getItem('auth-token')
     console.log('in ngOnit');
-
-    this.userService.getAllusers().subscribe({
-      next: (data) => {
-        this.userService.getToken();
-        console.log('Users fetched:', data); // Debug log
-        // this.users = data.content;
-        // this.totalusers = data.totalElements;
-
-        // this.page = data.number + 1;
-        if (data && Array.isArray(data.users)) {
-          this.users = data.users;
-          this.totalElements = data.totalElements.toString();
-          this.totalPages = data.totalPages.toString(); // Ensure this is being set correctly
-          this.page = data.page.toString();
-          // this.size = response.size.toString();
-        } else {
-          console.error('Failed to load blogs:', data);
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching users:', error);
-        alert(`Error: ${error.status} - ${error.statusText}`);
-      },
-    });
   }
 
   searchUsers(): void {
@@ -68,19 +42,19 @@ export class UserListComponent {
       this.loadAllUsers();
       return;
     }
-    
+
     this.page = 0; // Reset to the first page for search results
-    
+
     this.userService.searchUsers(this.searchKeyword).subscribe((res) => {
       console.log('Search Response:', res); // Log the full response here
-      console.log("content"+res.content)
-  
+      console.log('content' + res.content);
+
       if (res && Array.isArray(res)) {
         this.users = res;
+
         console.log(this.users);
         console.log(res);
-        
-        
+
         this.totalElements = res.length;
         this.totalPages = 1;
       } else {
@@ -88,34 +62,98 @@ export class UserListComponent {
       }
     });
   }
-  
 
   clearSearch() {
     this.searchKeyword = '';
     this.loadAllUsers();
-    
   }
+
+  // loadAllUsers(): void {
+  //   this.userService.getAllusers(this.page, this.pageSize).subscribe({
+  //     next: (response) => {
+  //       console.log('Paginated Users fetched:', response);
+
+  //       // Check if response.content exists
+  //       if (response && Array.isArray(response.content)) {
+  //         this.users = response.content; // Update this line to use response.content
+  //         this.totalElements = response.totalElements;
+  //         this.totalPages = response.totalPages;
+
+  //         //retrive user image
+  //         this.users.forEach((user, index) => {
+  //           if (user.profileImage) {
+  //             this.userService.getProfileImage(user.profileImage).subscribe({
+  //               next: (imageData: any) => {
+  //                 const base64Data = btoa(
+  //                   new Uint8Array(imageData).reduce(
+  //                     (data, byte) => data + String.fromCharCode(byte),
+  //                     ''
+  //                   )
+  //                 );
+  //                 this.users[index].profileImage =
+  //                   'data:image/jpeg;base64,' + base64Data;
+  //               },
+
+  //               error: (err) => {
+  //                 console.error('Error fetching profile image', err);
+  //               },
+  //             });
+  //           } else {
+  //             this.users[index].profileImage = 'assets/default-profile.png'; // fallback
+  //           }
+  //         });
+  //       } else {
+  //         console.error('Failed to load users:', response);
+  //       }
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching users:', error);
+  //     },
+  //   });
+  // }
 
   loadAllUsers(): void {
     this.userService.getAllusers(this.page, this.pageSize).subscribe({
       next: (response) => {
         console.log('Paginated Users fetched:', response);
-  
-        // Check if response.content exists
+
         if (response && Array.isArray(response.content)) {
-          this.users = response.content; // Update this line to use response.content
+          this.users = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
-        } else {
-          console.error('Failed to load users:', response);
+
+          this.users.forEach((user) => {
+            if (user.profileImage) {
+              this.userService.getProfileImage(user.profileImage).subscribe({
+                next: (imageData: any) => {
+                  const base64Data = btoa(
+                    new Uint8Array(imageData).reduce(
+                      (data, byte) => data + String.fromCharCode(byte),
+                      ''
+                    )
+                  );
+                  user.profileImage = 'data:image/jpeg;base64,' + base64Data;
+                },
+                error: (err) => {
+                  console.error(
+                    'Error loading profile image for user',
+                    user.userName
+                  );
+                },
+              });
+            }
+          });
         }
+
+        // else {
+        //   console.error('Failed to load users:', response);
+        // }
       },
       error: (error) => {
         console.error('Error fetching users:', error);
       },
     });
   }
-  
 
   // getUsers(): void {
   //   this.userService.getUsers().subscribe({
@@ -157,8 +195,6 @@ export class UserListComponent {
     this.loadAllUsers(); // again, backend uses 0-based page
   }
 
-  showImage: boolean = true;
-
   // When image fails to load, this runs
   onImageError() {
     this.showImage = false;
@@ -179,29 +215,25 @@ export class UserListComponent {
     return `${start} – ${end} of ${this.totalusers} users`;
   }
 
+  // Method to trigger Excel file download
+  downloadUserExcel(): void {
+    this.userService.downloadUsers().subscribe(
+      (response: Blob) => {
+        const fileName = 'users.xlsx'; // The file name for download
+        const fileExtension = '.xlsx'; // Correct extension for Excel files
 
-
-    // Method to trigger Excel file download
-    downloadUserExcel(): void {
-      this.userService.downloadUsers().subscribe(
-        (response: Blob) => {
-          const fileName = 'users.xlsx'; // The file name for download
-          const fileExtension = '.xlsx'; // Correct extension for Excel files
-    
-          // Ensure it's a valid Blob
-          if (response && response instanceof Blob) {
-            saveAs(response, fileName); // Trigger the download
-          } else {
-            console.error('Invalid file response');
-            alert('There was an issue with the file download.');
-          }
-        },
-        (error) => {
-          console.error('Download error:', error);
-          alert('There was an error while downloading the file.');
+        // Ensure it's a valid Blob
+        if (response && response instanceof Blob) {
+          saveAs(response, fileName); // Trigger the download
+        } else {
+          console.error('Invalid file response');
+          alert('There was an issue with the file download.');
         }
-      );
-    }
-    
-  
+      },
+      (error) => {
+        console.error('Download error:', error);
+        alert('There was an error while downloading the file.');
+      }
+    );
+  }
 }

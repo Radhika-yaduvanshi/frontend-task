@@ -7,6 +7,8 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule,
@@ -27,7 +29,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { saveAs } from 'file-saver';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,6 @@ import { saveAs } from 'file-saver';
     ViewUserComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -50,7 +50,6 @@ import { saveAs } from 'file-saver';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    
   ],
   // providers: [DatePipe, provideHttpClient(withInterceptors([authInterceptor]))],
   providers: [

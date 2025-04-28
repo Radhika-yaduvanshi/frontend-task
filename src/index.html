@@ -1,18 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>AdminPanel</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <head>
+    <meta charset="utf-8" />
+    <title>AdminPanel</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-  
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-
-</head>
-<body>
-  <app-root></app-root>
-</body>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        AOS.init({
+          duration: 800,
+          easing: "ease",
+          once: true,
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
 </html>

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  profileImage!: string;
   updateAuthor(author: any) {
     throw new Error('Method not implemented.');
   }
@@ -137,16 +138,38 @@ export class AuthenticationService {
     });
   }
 
-
   //download excelfile
 
-    // Method to download the users as an Excel file
-    downloadUsers(): Observable<Blob> {
-      const headers = new HttpHeaders().set(
-        'Accept',
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      );
-  
-      return this.http.get(`${this.apiUrl}/download-users`, { headers, responseType: 'blob' });
-    }
+  // Method to download the users as an Excel file
+  downloadUsers(): Observable<Blob> {
+    const headers = new HttpHeaders().set(
+      'Accept',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    return this.http.get(`${this.apiUrl}/download-users`, {
+      headers,
+      responseType: 'blob',
+    });
+  }
+
+  countUsers(): any {
+    return this.http.get(`${this.apiUrl}/totalUsers`);
+  }
+
+  // getProfileImage(id: any): any {
+  //   return this.http.get(`${this.apiUrl}/getProfileImage/${id}`);
+  // }
+  getProfileImage(imageName: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getProfileImage/${imageName}`, {
+      responseType: 'arraybuffer',
+    });
+  }
+
+  updateProfileImage(userId: number, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', `${userId}`);
+
+    return this.http.put<any>(`${this.apiUrl}/uploadProfileImage`, formData);
+  }
 }

@@ -16,8 +16,9 @@
         style="border-radius: 50px; outline: none"
       />
     </div>
-    <button (click)="downloadUserExcel()" class="btn btn-primary ms-3">Download</button>
-
+    <button (click)="downloadUserExcel()" class="btn btn-primary ms-3">
+      Download
+    </button>
   </div>
 
   <!-- User Table -->
@@ -36,18 +37,22 @@
     </thead>
     <tbody>
       <tr *ngFor="let user of users; let i = index">
-        <th scope="row">{{ i+(page>0?page*10+1:page+1) }}</th>
+        <th scope="row">{{ i + (page > 0 ? page * 10 + 1 : page + 1) }}</th>
         <td>
           <ng-container *ngIf="showImage && user.profileImage; else initials">
             <img
               [src]="user.profileImage"
               alt="Profile"
-              (error)="onImageError()"
+              (error)="user.profileImage = null"
               style="
                 width: 45px;
                 height: 45px;
                 border-radius: 50%;
                 object-fit: cover;
+                margin-left: 50px;
+                margin-right: -75px;
+                display: flex;
+                align-items: center;
               "
             />
           </ng-container>
@@ -57,6 +62,8 @@
               style="
                 width: 45px;
                 height: 45px;
+                margin-left: 50px;
+                margin-right: -75px;
                 border-radius: 50%;
                 background-color: #007bff;
                 color: white;
@@ -126,8 +133,6 @@ elements:{{users.length}} of {{totalElements}} -->
   >
     Next
   </button>
-  <br>
+  <br />
   <span>{{ users.length }} of {{ totalElements }} </span>
 </div>
-
-

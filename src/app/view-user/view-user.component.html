@@ -1,57 +1,237 @@
 <div *ngIf="user" class="user-details-container">
-  <h2 class="title">User Details</h2>
+  <div class="profile-header">
+    <div class="profile-image-container">
+      <!-- <img [src]="profileImage" alt="Profile Image" class="profile-image" /> -->
 
-  <div class="user-detail">
-    <!-- <strong>Profile Image:</strong> -->
-    <img src="female-profile1.png" alt="Profile Image" width="100" />
-  </div>
-  <div class="user-detail">
-    <strong>Name:</strong>
-    <p>{{ user.name }}</p>
+      <!-- for initials  -->
+      <ng-container *ngIf="showImage && profileImage; else initials">
+        <!-- <img
+          [src]="user.profileImage"
+          alt="Profile"
+          (error)="user.profileImage = null"
+          style="
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 50px;
+            margin-right: -75px;
+            display: flex;
+            align-items: center;
+          "
+        /> -->
+        <img
+          [src]="profileImage"
+          alt="Profile"
+          (error)="onImageError()"
+          style="
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 50px;
+            margin-right: -75px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow for clearer distinction */
+          "
+        />
+      </ng-container>
+      <ng-template #initials>
+        <div
+          style="
+            width: 100px;
+            height: 100px;
+            margin-left: 50px;
+            margin-right: -75px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+          "
+        >
+          {{ getInitials(user.userName) }}
+        </div>
+      </ng-template>
+    </div>
+    <h2 class="user-name">{{ user.name }}</h2>
+    <p class="username">{{ user.userName }}</p>
   </div>
 
-  <div class="user-detail">
-    <strong>Username:</strong>
-    <p>{{ user.userName }}</p>
-  </div>
+  <div class="details-card">
+    <div class="detail-item" data-aos="fade-up">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Full Name</span>
+        <span class="detail-value">{{ user.name }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Date of Birth:</strong>
-    <p>{{ user.dob | date }}</p>
-  </div>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="100">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Date of Birth</span>
+        <span class="detail-value">{{ user.dob | date }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Gender:</strong>
-    <p>{{ user.gender }}</p>
-  </div>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="200">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="8.5" cy="7" r="4"></circle>
+          <line x1="20" y1="8" x2="20" y2="14"></line>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Gender</span>
+        <span class="detail-value">{{ user.gender }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Address:</strong>
-    <p>{{ user.address }}</p>
-  </div>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="300">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Address</span>
+        <span class="detail-value">{{ user.address }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Contact Number:</strong>
-    <p>{{ user.contactNumber }}</p>
-  </div>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="400">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+          ></path>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Contact Number</span>
+        <span class="detail-value">{{ user.contactNumber }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Pincode:</strong>
-    <p>{{ user.pincode }}</p>
-  </div>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="500">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Pincode</span>
+        <span class="detail-value">{{ user.pincode }}</span>
+      </div>
+    </div>
 
-  <div class="user-detail">
-    <strong>Access Role:</strong>
-    <p>{{ user.accessRole }}</p>
+    <div class="detail-item" data-aos="fade-up" data-aos-delay="600">
+      <div class="detail-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <span class="detail-label">Access Role</span>
+        <span class="detail-value role-badge">{{ user.accessRole }}</span>
+      </div>
+    </div>
   </div>
-  <!-- 
-  <div class="user-detail">
-    <strong>Profile Image:</strong>
-    <img src="female-profile1.png" alt="Profile Image" width="100" />
-  </div> -->
 </div>
 
-<!-- Show loading message if user data is not loaded yet -->
-<div *ngIf="!user" class="loading-message">
-  <p>Loading...</p>
+<!-- Show loading spinner if user data is not loaded yet -->
+<div *ngIf="!user" class="loading-container">
+  <div class="loading-spinner"></div>
+  <p>Loading user details...</p>
 </div>
