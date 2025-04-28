@@ -1,48 +1,59 @@
 <div class="form-container">
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <!-- Profile Image Section -->
-    <div class="profile-image-container" (click)="fileInput.click()">
-      <ng-container *ngIf="profileImage; else initialsTemplate">
-        <img
-          [src]="profileImage"
-          alt="Profile Image"
-          class="profile-image"
-          (error)="profileImage = null"
-        />
-      </ng-container>
-      <ng-template #initialsTemplate>
-        <div class="initials">
-          {{ getInitials(user.userName) }}
-        </div>
-      </ng-template>
-      <input
-        #fileInput
-        type="file"
-        hidden
-        (change)="onFileChange($event)"
-        accept="image/*"
+  <div class="profile-image-container" (click)="fileInput.click()">
+    <ng-container *ngIf="showImage && profileImage; else initialsTemplate">
+      <img
+      [src]="profileImage"
+      alt="Profile"
+      (error)="onImageError()"
+      style="
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-left: 50px;
+        margin-right: -75px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add a subtle shadow for clearer distinction */
+      "
       />
-    </div>
-    <ng-template #initials>
-      <div
-        style="
-          width: 45px;
-          height: 45px;
-          margin-left: 50px;
-          margin-right: -75px;
-          border-radius: 50%;
-          background-color: #007bff;
-          color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: bold;
-          font-size: 14px;
-        "
-      >
+    </ng-container>
+    <ng-template #initialsTemplate>
+      <div class="initials">
         {{ getInitials(user.userName) }}
       </div>
     </ng-template>
+    <input
+      #fileInput
+      type="file"
+      hidden
+      (change)="onFileChange($event)"
+      accept="image/*"
+    />
+  </div>
+  <ng-template #initials>
+    <div
+      style="
+        width: 45px;
+        height: 45px;
+        margin-left: 50px;
+        margin-right: -75px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+      "
+    >
+      {{ getInitials(user.userName) }}
+    </div>
+  </ng-template>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <!-- Profile Image Section -->
+   
 
     <div class="form-group">
       <label for="name">Name</label>

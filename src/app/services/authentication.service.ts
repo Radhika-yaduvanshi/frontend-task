@@ -165,11 +165,21 @@ export class AuthenticationService {
     });
   }
 
-  updateProfileImage(userId: number, file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('userId', `${userId}`);
+  // updateProfileImage(userId: number, file: File) {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   console.log("file name  : in service : "+file.name);
+  //   console.log("file size  : in service : "+file.size);
+    
+  //   return this.http.put<any>(`${this.apiUrl}/uploadProfileImage/${userId}`, formData);
+  // }
 
-    return this.http.put<any>(`${this.apiUrl}/uploadProfileImage`, formData);
+  updateProfileImage(userId: number, file: FormData) {
+    const formData = new FormData();
+    // formData.append('file', file,file.name);
+    // console.log("file name  : in service : "+file.name);
+    // console.log("file size  : in service : "+file.size);
+    
+    return this.http.put<any>(`${this.apiUrl}/uploadProfileImage/${userId}`, formData);
   }
 }

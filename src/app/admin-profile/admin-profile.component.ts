@@ -109,14 +109,14 @@ export class AdminProfileComponent {
 
       this.userService.getUserIdFromToken().subscribe({
         next: (id) => {
+          console.log("id in upload profile: "+id);
+          
           this.userService
             .updateProfileImage(id, this.selectedImage)
             .subscribe({
               next: (response) => {
                 console.log('Profile image updated successfully', response);
 
-                //refresh page
-                this.ngOnInit();
                 const reader = new FileReader();
                 reader.onload = () => {
                   this.userProfile = reader.result as string;

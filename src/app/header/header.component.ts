@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
                     )
                   );
                   this.userProfile = 'data:image/jpeg;base64,' + base64Data;
-                  this.ngOnInit();
+                  // this.ngOnInit();
                 },
               });
             }
