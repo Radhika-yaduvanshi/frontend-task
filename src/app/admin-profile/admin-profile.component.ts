@@ -126,10 +126,7 @@ export class AdminProfileComponent {
 
                 this.profileImage = URL.createObjectURL(this.selectedImage); // Preview image
               },
-              error: (error) => {
-                console.error('Error updating profile image', error);
-                alert('An error occurred while uploading the profile image.');
-              },
+
             });
         },
       });

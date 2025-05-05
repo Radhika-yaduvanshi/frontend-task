@@ -10,12 +10,14 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'user-list', component: UserListComponent, canActivate: [authGuard]},
+  {path:'register',component:RegistrationComponent},
   {
     path: 'admin-profile',
     component: AdminProfileComponent,

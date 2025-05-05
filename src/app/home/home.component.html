@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <!-- Admin Header with Profile -->
     <header class="admin-header">
@@ -22,7 +23,6 @@
 
         <div class="profile-section">
           <img [src]="profileImage" alt="Admin Profile" class="profile-image" />
-
           <div class="profile-info text-start">
             <h3>{{ user?.userName }}</h3>
             <p>System Administrator</p>
@@ -42,7 +42,6 @@
           Here's what's happening with your users today
         </p>
         <button class="welcome-btn" routerLink="/user-list">
-          <!-- <a routerLink="/user-list">ha ha</a> -->
           View System Status
         </button>
       </div>
@@ -73,6 +72,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Generate Users -->
+      <!-- <div class="my-4">
+        <input type="number" id="userCount" placeholder="Enter number of users" class="form-control w-25 d-inline-block me-2" />
+        <button id="generateButton" class="btn btn-primary">Submit</button>
+        <p id="responseMessage" class="mt-2"></p>
+      </div> -->
 
       <div class="row">
         <!-- User Management Card -->
@@ -127,30 +133,20 @@
             <div class="d-grid gap-2">
               <button
                 class="btn btn-primary"
-                style="
-                  background-color: var(--primary-color);
-                  border-color: var(--primary-color);
-                "
+                style="background-color: var(--primary-color); border-color: var(--primary-color);"
               >
                 <i class="fas fa-user-plus me-2"></i> Add New User
               </button>
               <button
                 class="btn btn-outline-primary"
-                style="
-                  color: var(--primary-color);
-                  border-color: var(--primary-color);
-                "
+                style="color: var(--primary-color); border-color: var(--primary-color);"
                 routerLink="/user-list"
               >
                 <i class="fas fa-file-export me-2"></i> Export User Data
               </button>
-
               <button
                 class="btn btn-outline-primary"
-                style="
-                  color: var(--primary-color);
-                  border-color: var(--primary-color);
-                "
+                style="color: var(--primary-color); border-color: var(--primary-color);"
                 routerLink="/user-list"
               >
                 <i class="fas fa-cog me-2"></i> User Settings
@@ -161,6 +157,30 @@
       </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("generateButton").addEventListener("click", function () {
+          console.log("Button clicked"); // Debug log
+          const count = document.getElementById("userCount").value;
+
+          fetch("http://localhost:8088/user/generate/" + count, {
+            method: "POST"
+          })
+            .then(res => res.text())
+            .then(data => {
+              console.log("Response:", data);
+              document.getElementById("responseMessage").innerText = data;
+            })
+            .catch(err => {
+              console.error("Fetch error:", err);
+              document.getElementById("responseMessage").innerText = "Error: " + err;
+            });
+        });
+      });
+    </script>
   </body>
 </html>

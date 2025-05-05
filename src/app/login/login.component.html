@@ -17,6 +17,9 @@
       <div class="card login-card">
         <h3 class="login-header">Admin Login</h3>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmitUserData()">
+          <div *ngIf="errmsg" class="alert alert-danger">
+            {{ errmsg }}
+          </div>
           <div class="mb-3">
             <label class="form-label" for="userName"> Enter User Name :</label>
             <input

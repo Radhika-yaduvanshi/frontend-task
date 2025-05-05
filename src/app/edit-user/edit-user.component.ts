@@ -196,39 +196,70 @@ if (user.profileImage) {
 
 
 
-onFileChange(event: any) {
-  const file = event.target.files[0]; // Get the selected file
+// onFileChange(event: any) {
+//   const file = event.target.files[0]; // Get the selected file
 
-  if (file) {
-    console.log('File selected:', file.name);
+//   if (file) {
+//     console.log('File selected:', file.name);
 
-    const formData = new FormData();
-    formData.append('file', file, file.name); // Append the file to FormData
+//     const formData = new FormData();
+//     formData.append('file', file, file.name); // Append the file to FormData
 
-    const userId = this.user.id; // Assuming you have user information with id
-    console.log("user id  in onfilechagne : "+userId);
+//     const userId = this.user.id; // Assuming you have user information with id
+//     console.log("user id  in onfilechagne : "+userId);
     
 
-    // Send a PUT request to upload the image to the backend
-    this.userService.updateProfileImage(userId, file).subscribe(
-      (response:any) => {
-          if(typeof(response==='object'))
-            this.profileImage = response; // Assuming the backend returns the image URL
-          console.log("response =="+response  +"    and profileimage ::=====>"+this.profileImage);
+//     // Send a PUT request to upload the image to the backend
+//     this.userService.updateProfileImage(userId, file).subscribe(
+//       (response:any) => {
+//           if(typeof(response==='object'))
+//             this.profileImage = response; // Assuming the backend returns the image URL
+//           console.log("response =="+response  +"    and profileimage ::=====>"+this.profileImage);
           
 
-        console.log("response in updatre : "+response);
+//         console.log("response in updatre : "+response);
         
-        console.log('Image uploaded successfully:', response);
-        // Optionally, update the profileImage to display the uploaded image
-        // this.profileImage = response; // Assuming the backend returns the image URL
-      },
-      (error) => {
-        console.error('Error uploading image:', error);
+//         console.log('Image uploaded successfully:', response);
+//         // Optionally, update the profileImage to display the uploaded image
+//         // this.profileImage = response; // Assuming the backend returns the image URL
+//       },
+//       (error) => {
+//         console.error('Error uploading image:', error);
+//       }
+//     );
+//   }
+// }
+
+
+onFileChange(event: any) {
+  const file = event.target.files[0];
+  const userId = this.user.id;  // Make sure `this.user.id` is defined and not null
+
+  console.log("User ID: ", userId);
+  console.log("Selected file: ", file);
+
+  this.userService.updateProfileImage(userId, file).subscribe({
+    next: (response: any) => {
+      console.log("response :",response);
+      
+      console.log("Response is : ",response.fileName);
+      
+      if (response && response.fileName) {
+        this.profileImage = response.fileName;
+        console.log("Updated profile image:", this.profileImage);
+      } else {
+        console.warn("File upload response is invalid or missing fileName:", response);
       }
-    );
-  }
+    },
+    error: (err) => {
+      console.error("Error uploading file:", err);
+    }
+  });
+  
+  
 }
+
+
   
   // uploadProfileImage(userId: number) {
   //   if (this.selectedImage) {

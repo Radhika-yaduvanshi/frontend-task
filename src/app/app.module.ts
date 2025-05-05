@@ -28,6 +28,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { saveAs } from 'file-saver';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { saveAs } from 'file-saver';
     ViewUserComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClientModule } from '@angular/common/http';
-
+interface UploadResponse {
+  fileName: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -173,13 +175,25 @@ export class AuthenticationService {
     
   //   return this.http.put<any>(`${this.apiUrl}/uploadProfileImage/${userId}`, formData);
   // }
-
-  updateProfileImage(userId: number, file: FormData) {
+  updateProfileImage(userId: number, file: File) {
     const formData = new FormData();
-    // formData.append('file', file,file.name);
-    // console.log("file name  : in service : "+file.name);
-    // console.log("file size  : in service : "+file.size);
-    
-    return this.http.put<any>(`${this.apiUrl}/uploadProfileImage/${userId}`, formData);
+    formData.append('file', file);
+  
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${localStorage.getItem('auth-token')}`
+    );
+  
+    return this.http.post(
+      `${this.apiUrl}/uploadProfileImage/${userId}`,
+      formData,
+      { headers }
+    );
   }
+
+  registerUsers(count:number):any{
+    return this.http.post(`${this.apiUrl}/generate/${count}`,{})
+  }
+  
+  
 }
