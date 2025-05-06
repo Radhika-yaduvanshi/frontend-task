@@ -194,6 +194,20 @@ export class AuthenticationService {
   registerUsers(count:number):any{
     return this.http.post(`${this.apiUrl}/generate/${count}`,{})
   }
+
+  // nonDeletedUsers(page: number = 0, size: number = 10):any{
+  //   const headers = new HttpHeaders().set(
+  //     'Authorization',
+  //     `Bearer ${localStorage.getItem('auth-token')}`
+  //   );
+  //   return this.http.get(`${this.apiUrl}/getNonDeletedUsers`,{headers});
+  // }
+
+  nonDeletedUsers(page: number = 0, size: number = 10): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/getNonDeletedUsers?page=${page}&size=${size}`
+    );
+  }
   
   
 }

@@ -32,6 +32,7 @@ export class UserListComponent {
   ngOnInit(): void {
     // debugger;
     this.loadAllUsers();
+    // this.nonDeletedUsers()
     // // localStorage.removeItem('auth-token');
     // localStorage.getItem('auth-token')
     console.log('in ngOnit');
@@ -113,8 +114,8 @@ export class UserListComponent {
   // }
 
   loadAllUsers(): void {
-    this.userService.getAllusers(this.page, this.pageSize).subscribe({
-      next: (response) => {
+    this.userService.nonDeletedUsers(this.page, this.pageSize).subscribe({
+      next: (response:any) => {
         console.log('Paginated Users fetched:', response);
 
         if (response && Array.isArray(response.content)) {
@@ -149,7 +150,7 @@ export class UserListComponent {
         //   console.error('Failed to load users:', response);
         // }
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error fetching users:', error);
       },
     });
@@ -192,6 +193,7 @@ export class UserListComponent {
 
   onPageChange(page: number): void {
     this.page = page;
+    // this.nonDeletedUsers();
     this.loadAllUsers(); // again, backend uses 0-based page
   }
 
@@ -235,5 +237,45 @@ export class UserListComponent {
         alert('There was an error while downloading the file.');
       }
     );
+  }
+
+
+  nonDeletedUsers(){
+    this.userService.nonDeletedUsers().subscribe((res:any)=>{
+      this.users=res;
+      console.log("response : "+res);
+
+     
+      if (res && Array.isArray(res.content)) {
+        this.users = res.content;
+        this.totalElements = res.totalElements;
+        this.totalPages = res.totalPages;
+
+        this.users.forEach((user) => {
+          if (user.profileImage) {
+            this.userService.getProfileImage(user.profileImage).subscribe({
+              next: (imageData: any) => {
+                const base64Data = btoa(
+                  new Uint8Array(imageData).reduce(
+                    (data, byte) => data + String.fromCharCode(byte),
+                    ''
+                  )
+                );
+                user.profileImage = 'data:image/jpeg;base64,' + base64Data;
+              },
+              error: (err) => {
+                console.error(
+                  'Error loading profile image for user',
+                  user.userName
+                );
+              },
+            });
+          }
+        });
+      }
+
+      
+      
+    })
   }
 }
