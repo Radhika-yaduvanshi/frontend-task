@@ -19,6 +19,19 @@
     <button (click)="downloadUserExcel()" class="btn btn-primary ms-3">
       Download Data in Excel
     </button>
+
+
+        <!-- Dropdown to filter users -->
+        <select 
+        [(ngModel)]="filterOption" 
+        (change)="filterUsers()" 
+        class="form-select ms-3" 
+        style="max-width: 200px; border-radius: 50px;"
+      >
+        <option value="all">All Users</option>
+        <option value="admin">Admins</option>
+        <option value="user">Users</option>
+      </select>
   </div>
 
   <!-- User Table -->
@@ -32,11 +45,12 @@
         <th scope="col">Profile</th>
         <th scope="col">Username</th>
         <th scope="col">DOB</th>
+        <th scope="col">Role</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users; let i = index">
+      <tr *ngFor="let user of filteredUsers; let i = index">
         <th scope="row">{{ i + (page > 0 ? page * 10 + 1 : page + 1) }}</th>
         <td>
           <ng-container *ngIf="showImage && user.profileImage; else initials">
@@ -80,6 +94,7 @@
         </td>
         <td>{{ user.userName }}</td>
         <td>{{ user.dob | date : "mediumDate" }}</td>
+        <td>{{ user.accessRole }}</td>
         <td>
           <button
             class="btn btn-sm btn-outline-primary me-1"
@@ -124,7 +139,11 @@ elements:{{users.length}} of {{totalElements}} -->
     Previous
   </button>
 
-  <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>
+  <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>   
+  <!-- <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>   old-->
+  <!-- <th scope="row">{{ page * pageSize + 10 + 1 }}</th> -->
+
+
 
   <button
     class="btn btn-primary ms-3"
@@ -134,5 +153,5 @@ elements:{{users.length}} of {{totalElements}} -->
     Next
   </button>
   <br />
-  <span>{{ users.length }} of {{ totalElements }} </span>
+  <span>{{ filteredUsers.length }} of {{ totalElements }} </span>
 </div>

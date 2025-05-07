@@ -4,6 +4,13 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { saveAs } from 'file-saver';
 
+
+interface User {
+  id: number;
+  name: string;
+  role: string;
+  // You can add any other properties you expect here, e.g., profileImage, email, etc.
+}
 @Component({
   selector: 'app-user-list',
   standalone: false,
@@ -21,6 +28,10 @@ export class UserListComponent {
   totalElements: number = 0;
   totalPages: number = 0;
 
+  filteredUsers= [...this.users]; /// Filtered users based on the dropdown
+  filterOption = 'all'; 
+  pagedUsers: any[] = []; 
+
   // currentPage = 1;
 
   // router = inject(Router);
@@ -36,7 +47,33 @@ export class UserListComponent {
     // // localStorage.removeItem('auth-token');
     // localStorage.getItem('auth-token')
     console.log('in ngOnit');
+    console.log("admins");
+
+    // this.getAllAdmins();
   }
+
+    // Filter users based on the selected option
+    filterUsers() {
+
+      if (this.filterOption === 'all') {
+        this.filteredUsers = [...this.users]; // Show all users
+      } else if (this.filterOption === 'admin') {
+        this.filteredUsers = this.users.filter(user => user.accessRole === 'ADMIN'); // Show admins only
+      } else if (this.filterOption === 'user') {
+        this.filteredUsers = this.users.filter(user => user.accessRole === 'USER'); // Show regular users only
+      }
+      // this.page = 0;
+      // this.updatePagedUsers();
+    }
+    updatePagedUsers(): void {
+      const startIndex = this.page * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      this.pagedUsers = this.filteredUsers.slice(startIndex, endIndex);
+    
+      // Update total pages based on filtered results
+      this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);
+    }
+    
 
   searchUsers(): void {
     if (this.searchKeyword.trim() === '') {
@@ -144,11 +181,9 @@ export class UserListComponent {
               });
             }
           });
-        }
 
-        // else {
-        //   console.error('Failed to load users:', response);
-        // }
+          this.filterUsers(); 
+        }
       },
       error: (error: any) => {
         console.error('Error fetching users:', error);
@@ -174,6 +209,7 @@ export class UserListComponent {
       this.userService.deleteUser(userId).subscribe({
         next: () => {
           this.users = this.users.filter((user) => user.id !== userId);
+          this.filterUsers();    
           alert('User deleted successfully');
         },
         error: (error) => {
@@ -278,4 +314,20 @@ export class UserListComponent {
       
     })
   }
+
+
+
+  // getAllAdmins(){
+  //   this.userService.getAllusers().subscribe((res)=>{
+  //     console.log("All users : "+res);
+
+  //     const admin=res.filter((user: { role: string; })=>user.role==='admin')
+  //     console.log("admins "+admin);
+  //     this.filteredUsers = admin; 
+  //     console.log("Filterusers : "+this.filterUsers);
+      
+      
+      
+  //   })
+  // }
 }
