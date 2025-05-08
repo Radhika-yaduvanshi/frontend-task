@@ -208,6 +208,22 @@ export class AuthenticationService {
       `${this.apiUrl}/getNonDeletedUsers?page=${page}&size=${size}`
     );
   }
+
+
+
+  //code for xl upload and download template
+  uploadUserExcel(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`${this.apiUrl}/upload-users`, formData, { responseType: 'text' });
+  }
+
+  downloadTemplate() {
+    return this.http.get(`${this.apiUrl}/template`, {
+      responseType: 'blob',
+    });
+  }
+
   
   
 }

@@ -1,6 +1,34 @@
 <div class="table-container">
   <!-- Search Bar -->
   <div class="search-wrapper mb-4 d-flex justify-content-center">
+
+<!-- Upload Excel Button and Input -->
+<label class="btn btn-secondary ms-3  mb-0">
+  Upload Excel
+  <input
+    type="file"
+    (change)="uploadExcel($event)"
+    accept=".xlsx, .xls"
+    hidden
+  />
+
+</label><br>
+
+  <!-- selected file is here -->
+  <span class="alert alert-warning" *ngIf="selectedFileName">
+    Selected: {{ selectedFileName }}
+  </span>
+
+
+
+<!-- Download Template Button -->
+<button class="btn btn-primary ms-3" (click)="downloadUserTemplate()">
+  Download Template
+</button>
+
+
+
+
     <div
       class="search-box rounded-pill bg-light px-3 py-2 d-flex align-items-center"
       style="width: 100%; max-width: 400px"
@@ -32,7 +60,13 @@
         <option value="admin">Admins</option>
         <option value="user">Users</option>
       </select>
-  </div>
+  </div><br>
+
+
+<!-- Error message for download -->
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
+</div>
 
   <!-- User Table -->
   <table class="table custom-table text-center">

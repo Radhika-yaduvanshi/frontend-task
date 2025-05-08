@@ -18,6 +18,9 @@ interface User {
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
+  errorMessage: string | null = null;
+
+// router = inject(Router);
   users: any[] = [];
   searchKeyword: string = '';
   totalusers: number = 0;
@@ -31,7 +34,9 @@ export class UserListComponent {
   filteredUsers= [...this.users]; /// Filtered users based on the dropdown
   filterOption = 'all'; 
   pagedUsers: any[] = []; 
+  selectedFile: File | null = null;
 
+  selectedFileName: string | null = null;
   // currentPage = 1;
 
   // router = inject(Router);
@@ -51,6 +56,65 @@ export class UserListComponent {
 
     // this.getAllAdmins();
   }
+
+  uploadExcel(event: Event) {
+    const input = event.target as HTMLInputElement;
+  
+    if (!input.files || input.files.length === 0) {
+      this.errorMessage = "Please select a file to upload.";
+      return;
+    }
+  
+    this.selectedFile = input.files[0];
+    this.selectedFileName = this.selectedFile.name;
+  
+    const validExtensions = ['.xlsx', '.xls'];
+    const fileExtension = this.selectedFile.name.split('.').pop()?.toLowerCase();
+    if (!validExtensions.includes(`.${fileExtension}`)) {
+      this.errorMessage = "Invalid file type. Please select an Excel file.";
+      return;
+    }
+  
+    this.errorMessage = null;
+
+    this.userService.uploadUserExcel(this.selectedFile).subscribe({
+      next: () => {
+        alert('Excel uploaded successfully!');
+        this.selectedFile = null;
+      this.selectedFileName = null;
+  
+        this.errorMessage = null;  
+      },
+      error: (err) => {
+        if (err.status === 400 && typeof err.error === 'string') {
+          this.errorMessage = err.error;
+        } else {
+          this.errorMessage = 'Upload failed: Unknown error occurred.';
+        }
+      }
+    });
+  }
+  
+  downloadUserTemplate() {
+    this.errorMessage = null;
+  
+    this.userService.downloadTemplate().subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'UserTemplate.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.errorMessage = null;  // Clear any previous error
+      },
+      error: (err) => {
+        // Handle download failure
+        this.errorMessage = err.error || 'Download failed: Unknown error occurred.';
+      }
+    });
+  }
+  
 
     // Filter users based on the selected option
     filterUsers() {
