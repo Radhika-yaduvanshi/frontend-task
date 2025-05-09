@@ -126,18 +126,21 @@ export class UserListComponent {
       } else if (this.filterOption === 'user') {
         this.filteredUsers = this.users.filter(user => user.accessRole === 'USER'); // Show regular users only
       }
+
       // this.page = 0;
       // this.updatePagedUsers();
     }
+
     updatePagedUsers(): void {
       const startIndex = this.page * this.pageSize;
       const endIndex = startIndex + this.pageSize;
+    
+      // Update the paged users based on filtered data
       this.pagedUsers = this.filteredUsers.slice(startIndex, endIndex);
     
-      // Update total pages based on filtered results
-      this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);
-    }
-    
+      // Update total pages based on the filtered users
+      this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);}
+
 
   searchUsers(): void {
     if (this.searchKeyword.trim() === '') {
@@ -147,7 +150,7 @@ export class UserListComponent {
 
     this.page = 0; // Reset to the first page for search results
 
-    this.userService.searchUsers(this.searchKeyword).subscribe((res) => {
+    this.userService.searchUsers(this.searchKeyword).subscribe((res:any) => {
       console.log('Search Response:', res); // Log the full response here
       console.log('content' + res.content);
 
@@ -159,6 +162,7 @@ export class UserListComponent {
 
         this.totalElements = res.length;
         this.totalPages = 1;
+        this.filterUsers();
       } else {
         console.error('No results or invalid response:', res);
       }
@@ -223,6 +227,8 @@ export class UserListComponent {
           this.users = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
+
+          // this.updatePagedUsers();
 
           this.users.forEach((user) => {
             if (user.profileImage) {
@@ -295,6 +301,7 @@ export class UserListComponent {
     this.page = page;
     // this.nonDeletedUsers();
     this.loadAllUsers(); // again, backend uses 0-based page
+    // this.updatePagedUsers();
   }
 
   // When image fails to load, this runs

@@ -164,6 +164,11 @@
 <button class="btn btn-secondary" (click)="onPageChange(page + 1)" [disabled]="page >= totalPages - 1">Next</button>
 <br>
 elements:{{users.length}} of {{totalElements}} -->
+
+
+
+
+<!-- pagination code  -->
 <div class="page-continer">
   <button
     class="btn btn-primary ms-3"
@@ -174,10 +179,6 @@ elements:{{users.length}} of {{totalElements}} -->
   </button>
 
   <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>   
-  <!-- <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>   old-->
-  <!-- <th scope="row">{{ page * pageSize + 10 + 1 }}</th> -->
-
-
 
   <button
     class="btn btn-primary ms-3"
@@ -189,3 +190,9 @@ elements:{{users.length}} of {{totalElements}} -->
   <br />
   <span>{{ filteredUsers.length }} of {{ totalElements }} </span>
 </div>
+
+
+<!-- till here pagination -->
+
+
+
