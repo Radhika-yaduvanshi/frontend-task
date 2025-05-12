@@ -1,33 +1,26 @@
 <div class="table-container">
   <!-- Search Bar -->
   <div class="search-wrapper mb-4 d-flex justify-content-center">
+    <!-- Upload Excel Button and Input -->
+    <label class="btn btn-secondary ms-3 mb-0">
+      Upload Excel
+      <input
+        type="file"
+        (change)="uploadExcel($event)"
+        accept=".xlsx, .xls"
+        hidden
+      /> </label
+    ><br />
 
-<!-- Upload Excel Button and Input -->
-<label class="btn btn-secondary ms-3  mb-0">
-  Upload Excel
-  <input
-    type="file"
-    (change)="uploadExcel($event)"
-    accept=".xlsx, .xls"
-    hidden
-  />
+    <!-- selected file is here -->
+    <span class="alert alert-warning" *ngIf="selectedFileName">
+      Selected: {{ selectedFileName }}
+    </span>
 
-</label><br>
-
-  <!-- selected file is here -->
-  <span class="alert alert-warning" *ngIf="selectedFileName">
-    Selected: {{ selectedFileName }}
-  </span>
-
-
-
-<!-- Download Template Button -->
-<button class="btn btn-primary ms-3" (click)="downloadUserTemplate()">
-  Download Template
-</button>
-
-
-
+    <!-- Download Template Button -->
+    <button class="btn btn-primary ms-3" (click)="downloadUserTemplate()">
+      Download Template
+    </button>
 
     <div
       class="search-box rounded-pill bg-light px-3 py-2 d-flex align-items-center"
@@ -48,25 +41,24 @@
       Download Data in Excel
     </button>
 
+    <!-- Dropdown to filter users -->
+    <select
+      [(ngModel)]="filterOption"
+      (change)="filterUsers()"
+      class="form-select ms-3"
+      style="max-width: 200px; border-radius: 50px"
+    >
+      <option value="all">All Users</option>
+      <option value="admin">Admins</option>
+      <option value="user">Users</option>
+    </select>
+  </div>
+  <br />
 
-        <!-- Dropdown to filter users -->
-        <select 
-        [(ngModel)]="filterOption" 
-        (change)="filterUsers()" 
-        class="form-select ms-3" 
-        style="max-width: 200px; border-radius: 50px;"
-      >
-        <option value="all">All Users</option>
-        <option value="admin">Admins</option>
-        <option value="user">Users</option>
-      </select>
-  </div><br>
-
-
-<!-- Error message for download -->
-<div *ngIf="errorMessage" class="alert alert-danger mt-3">
-  {{ errorMessage }}
-</div>
+  <!-- Error message for download -->
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
 
   <!-- User Table -->
   <table class="table custom-table text-center">
@@ -78,13 +70,14 @@
         <th scope="col">No</th>
         <th scope="col">Profile</th>
         <th scope="col">Username</th>
+        <th scope="col">Email</th>
         <th scope="col">DOB</th>
         <th scope="col">Role</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of filteredUsers; let i = index">
+      <tr *ngFor="let user of pagedUsers; let i = index">
         <th scope="row">{{ i + (page > 0 ? page * 10 + 1 : page + 1) }}</th>
         <td>
           <ng-container *ngIf="showImage && user.profileImage; else initials">
@@ -127,6 +120,7 @@
           </ng-template>
         </td>
         <td>{{ user.userName }}</td>
+        <td>{{ user.email }}</td>
         <td>{{ user.dob | date : "mediumDate" }}</td>
         <td>{{ user.accessRole }}</td>
         <td>
@@ -165,11 +159,8 @@
 <br>
 elements:{{users.length}} of {{totalElements}} -->
 
-
-
-
 <!-- pagination code  -->
-<div class="page-continer">
+<!-- <div class="page-continer">
   <button
     class="btn btn-primary ms-3"
     (click)="onPageChange(page - 1)"
@@ -178,21 +169,56 @@ elements:{{users.length}} of {{totalElements}} -->
     Previous
   </button>
 
-  <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span>   
+  <span class="page-info">Page {{ page + 1 }} of {{ totalPages }}</span> -->
 
-  <button
+<!-- <div>
+    Page: {{ page }} | Total Pages: {{ totalPages }} | Users: {{ users.length }}
+  </div> -->
+
+<!-- <button
     class="btn btn-primary ms-3"
     (click)="onPageChange(page + 1)"
-    [disabled]="page >= totalPages - 1"
-  >
-    Next
-  </button>
-  <br />
-  <span>{{ filteredUsers.length }} of {{ totalElements }} </span>
-</div>
-
+    [disabled]="page >= totalPages - 1 || totalPages === 0"
+  > -->
+<!--     [disabled]="page >= totalPages - 1"
+ -->
+<!-- Next -->
+<!-- </button>
+  <br /> -->
+<!-- <span>{{ pagedUsers.length }} of {{ totalElements }} </span> -->
+<!-- <span class="text-muted"
+    >Showing {{ pagedUsers.length }} of {{ totalElements }} users</span
+  > -->
+<!-- </div> -->
 
 <!-- till here pagination -->
 
+<div
+  class="pagination-container mt-3 d-flex justify-content-center align-items-center"
+>
+  <button
+    class="btn btn-outline-primary me-3"
+    (click)="onPageChange(page - 1)"
+    [disabled]="page <= 0"
+  >
+    Previous
+  </button>
 
+  <span class="page-info mx-3"
+    >Page {{ page + 1 }} of {{ totalPages || 1 }}</span
+  >
 
+  <button
+    class="btn btn-outline-primary ms-3"
+    (click)="onPageChange(page + 1)"
+    [disabled]="page >= totalPages - 1 || totalPages === 0"
+  >
+    Next
+  </button>
+</div>
+
+<div class="text-center mt-2">
+  <span class="text-muted"
+    >Showing {{ pagedUsers.length }} of {{ totalElements }} users</span
+  >
+</div>

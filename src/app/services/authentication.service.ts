@@ -172,18 +172,18 @@ export class AuthenticationService {
   //   formData.append('file', file);
   //   console.log("file name  : in service : "+file.name);
   //   console.log("file size  : in service : "+file.size);
-    
+
   //   return this.http.put<any>(`${this.apiUrl}/uploadProfileImage/${userId}`, formData);
   // }
   updateProfileImage(userId: number, file: File) {
     const formData = new FormData();
     formData.append('file', file);
-  
+
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${localStorage.getItem('auth-token')}`
     );
-  
+
     return this.http.post(
       `${this.apiUrl}/uploadProfileImage/${userId}`,
       formData,
@@ -191,8 +191,8 @@ export class AuthenticationService {
     );
   }
 
-  registerUsers(count:number):any{
-    return this.http.post(`${this.apiUrl}/generate/${count}`,{})
+  registerUsers(count: number): any {
+    return this.http.post(`${this.apiUrl}/generate/${count}`, {});
   }
 
   // nonDeletedUsers(page: number = 0, size: number = 10):any{
@@ -209,13 +209,13 @@ export class AuthenticationService {
     );
   }
 
-
-
   //code for xl upload and download template
   uploadUserExcel(file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post(`${this.apiUrl}/upload-users`, formData, { responseType: 'text' });
+    return this.http.post(`${this.apiUrl}/upload-users`, formData, {
+      responseType: 'text',
+    });
   }
 
   downloadTemplate() {
@@ -224,6 +224,14 @@ export class AuthenticationService {
     });
   }
 
-  
-  
+  getUserByRole(page: number, size: number, role: string): Observable<any> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    if (role) {
+      params = params.set('role', role.toUpperCase());
+    }
+
+    return this.http.get(`${this.apiUrl}/getUserByRole`, { params });
+  }
 }
